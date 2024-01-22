@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.IndexRange;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -27,6 +28,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToolBar;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -62,6 +65,20 @@ public class FXMLVistaController implements Initializable {
     private MenuItem itemBuscar;
     @FXML
     private MenuItem itemReemplazar;
+    @FXML
+    private MenuItem itemNegrita;
+    @FXML
+    private MenuItem itemCursiva;
+    @FXML
+    private MenuItem itemMayusculas;
+    @FXML
+    private MenuItem itemMinusculas;
+    @FXML
+    private MenuItem itemTamanio12;
+    @FXML
+    private MenuItem itemTamanio16;
+    @FXML
+    private MenuItem itemTamanio18;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -71,27 +88,22 @@ public class FXMLVistaController implements Initializable {
     @FXML
     private void cambiarFuenteArial(ActionEvent event) {
 
-        cambiarFuente("Arial");
+        areaTexto.setStyle("-fx-font-family: Arial;");
 
     }
 
     @FXML
     private void cambiarFuenteCourier(ActionEvent event) {
 
-        cambiarFuente("Courier");
+        areaTexto.setStyle("-fx-font-family: Courier New;");
 
     }
 
     @FXML
     private void cambiarFuenteVerdana(ActionEvent event) {
 
-        cambiarFuente("Verdana");
+        areaTexto.setStyle("-fx-font-family: Verdana;");
 
-    }
-
-    private void cambiarFuente(String nombreFuente) {
-        Font nuevaFuente = new Font(nombreFuente, areaTexto.getFont().getSize());
-        areaTexto.setFont(nuevaFuente);
     }
 
     @FXML
@@ -204,11 +216,8 @@ public class FXMLVistaController implements Initializable {
 
     @FXML
     private void buscarCoincidencias(ActionEvent event) {
-        
-        
+
         //A ESTO DARLE UNA VUELTA, PUEDO HACER UNA BARRA QUE SE MUESTRE ABAJO Y SI NO HAY PALABRA A BUSCAR QUE SE OCULTE O CERRARLA CON UNA X O ALGO 
-        
-        
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Buscar Coincidencias");
         dialog.setHeaderText("Ingrese el texto a buscar:");
@@ -217,18 +226,17 @@ public class FXMLVistaController implements Initializable {
         resultado.ifPresent(textoABuscar -> {
             String contenido = areaTexto.getText();
             int index = contenido.indexOf(textoABuscar);
-      
+
             if (index != -1) {
                 areaTexto.selectRange(index, index + textoABuscar.length());
             } else {
                 mostrarAlerta("Texto no encontrado", "El texto especificado no se encontró en el documento.");
             }
         });
-        
+
         //A ESTO DARLE UNA VUELTA, PUEDO HACER UNA BARRA QUE SE MUESTRE ABAJO Y SI NO HAY PALABRA A BUSCAR QUE SE OCULTE O CERRARLA CON UNA X O ALGO 
-     
     }
- 
+
     @FXML
     private void reemplazar(ActionEvent event) {
         TextInputDialog dialogBuscar = new TextInputDialog();
@@ -249,17 +257,67 @@ public class FXMLVistaController implements Initializable {
             });
         });
     }
-    
 
     private void mostrarAlerta(String titulo, String contenido) {
-        
+
         //ESTE METODO ES DE BUSCAR, SI NO HAY COINCIDENCIA SALTA ALERTA
-        
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(contenido);
         alert.showAndWait();
     }
+
+    @FXML
+    private void estiloNegrita(ActionEvent event) {
+
+        String estiloActual = areaTexto.getStyle();
+        areaTexto.setStyle(estiloActual + "-fx-font-weight: bold;");
+
+    }
+
+    @FXML
+    private void estiloCursiva(ActionEvent event) {
+
+        String estiloActual = areaTexto.getStyle();
+        areaTexto.setStyle(estiloActual + "-fx-font-weight: normal; -fx-font-style: italic;");
+
+    }
+
+    @FXML
+    private void textoMayusculas(ActionEvent event) {
+
+        String textoActual = areaTexto.getText();
+        areaTexto.setText(textoActual.toUpperCase());
+
+    }
+
+    @FXML
+    private void textoMinusculas(ActionEvent event) {
+
+        String textoActual = areaTexto.getText();
+        areaTexto.setText(textoActual.toLowerCase());
+
+    }
+
+       @FXML
+    private void cambiarTamanio12(ActionEvent event) {
+        cambiarTamanioTexto(12);
+    }
+
+    @FXML
+    private void cambiarTamanio16(ActionEvent event) {
+        cambiarTamanioTexto(16);
+    }
+
+    @FXML
+    private void cambiarTamanio18(ActionEvent event) {
+        cambiarTamanioTexto(18);
+    }
+
+    private void cambiarTamanioTexto(int tamanio) {
+        areaTexto.setStyle("-fx-font-size: " + tamanio + "px;");
+    }
+
 
 }

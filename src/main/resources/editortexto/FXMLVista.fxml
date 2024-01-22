@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="editortexto.FXMLVistaController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu id="itemArchivo" mnemonicParsing="false" text="Archivo">
+            <items>
+                  <MenuItem id="botonNuevo" fx:id="itemNuevo" mnemonicParsing="false" onAction="#nuevaVentana" text="Nuevo" />
+                  <MenuItem id="itemAbrir" fx:id="itemAbrir" mnemonicParsing="false" onAction="#abrirArchivo" text="Abrir" />
+                  <MenuItem id="itemGuardar" fx:id="itemGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
+                  <MenuItem id="itemGuardarComo" fx:id="itemGuardarComo" mnemonicParsing="false" onAction="#guardarComo" text="Guardar como" />
+              <MenuItem id="itemSalir" fx:id="itemSalir" mnemonicParsing="false" onAction="#salir" text="Salir" />
+            </items>
+          </Menu>
+          <Menu id="menuEdicion" mnemonicParsing="false" text="Edición">
+            <items>
+                  <MenuItem id="itemBuscar" fx:id="itemBuscar" mnemonicParsing="false" onAction="#buscarCoincidencias" text="Buscar" />
+                   <MenuItem id="itemReemplazar" fx:id="itemReemplazar" mnemonicParsing="false" onAction="#reemplazar" text="Reemplazar" />
+            </items>
+          </Menu>
+            <Menu id="menuFormato" mnemonicParsing="false" text="Formato">
+              <items>
+                  <Menu id="menuEstilo" mnemonicParsing="false" text="Estilo">
+                    <items>
+                        <MenuItem id="itemNegrita" fx:id="itemNegrita" mnemonicParsing="false" onAction="#estiloNegrita" text="negrita" />
+                        <MenuItem id="itemCursiva" fx:id="itemCursiva" mnemonicParsing="false" onAction="#estiloCursiva" text="cursiva" />
+                    </items>
+                  </Menu>
+                  <Menu id="menuTexto" mnemonicParsing="false" text="Texto">
+                    <items>
+                      <MenuItem id="itemMayusculas" fx:id="itemMayusculas" mnemonicParsing="false" onAction="#textoMayusculas" text="MAYÚSCULAS" />
+                      <MenuItem id="itemMinusculas" fx:id="itemMinusculas" mnemonicParsing="false" onAction="#textoMinusculas" text="minúsculas" />
+                    </items>
+                  </Menu>
+                  <Menu id="menuFuente" mnemonicParsing="false" text="Fuente">
+                    <items>
+                      <MenuItem id="itemArial" fx:id="itemArial" mnemonicParsing="false" onAction="#cambiarFuenteArial" text="Arial" />
+                        <MenuItem id="itemCourier" fx:id="itemCourier" mnemonicParsing="false" onAction="#cambiarFuenteCourier" text="Courier" />
+                        <MenuItem id="itemVerdana" fx:id="itemVerdana" mnemonicParsing="false" onAction="#cambiarFuenteVerdana" text="Verdana" />
+                    </items>
+                  </Menu>
+                  <Menu id="menuTamaño" mnemonicParsing="false" text="Tamaño">
+                    <items>
+                      <MenuItem id="itemTamanioDoce" fx:id="itemTamanio12" mnemonicParsing="false" onAction="#cambiarTamanio12" text="12" />
+                        <MenuItem id="itemTamanioDieciseis" fx:id="itemTamanio16" mnemonicParsing="false" onAction="#cambiarTamanio16" text="16" />
+                        <MenuItem id="itemTamanioDieciocho" fx:id="itemTamanio18" mnemonicParsing="false" onAction="#cambiarTamanio18" text="18" />
+                    </items>
+                  </Menu>
+              </items>
+            </Menu>
+            <Menu id="menuVer" mnemonicParsing="false" text="Ver">
+              <items>
+                <MenuItem id="itemBarraEstado" mnemonicParsing="false" text="Ocultar barra de estado" />
+              </items>
+            </Menu>
+          <Menu id="menuAyuda" mnemonicParsing="false" text="Ayuda">
+            <items>
+              <MenuItem id="itemAcercaDe" mnemonicParsing="false" text="Acerca de..." />
+            </items>
+          </Menu>
+        </menus>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </MenuBar>
+   </top>
+   <center>
+      <TextArea id="areaTexto" fx:id="areaTexto" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="2.0" />
+         </BorderPane.margin>
+      </TextArea>
+   </center>
+</BorderPane>

@@ -30,14 +30,14 @@
               <items>
                   <Menu id="menuEstilo" mnemonicParsing="false" text="Estilo">
                     <items>
-                        <MenuItem id="itemNegrita" mnemonicParsing="false" text="negrita" />
-                        <MenuItem id="itemCursiva" mnemonicParsing="false" text="cursiva" />
+                        <MenuItem id="itemNegrita" fx:id="itemNegrita" mnemonicParsing="false" onAction="#estiloNegrita" text="negrita" />
+                        <MenuItem id="itemCursiva" fx:id="itemCursiva" mnemonicParsing="false" onAction="#estiloCursiva" text="cursiva" />
                     </items>
                   </Menu>
                   <Menu id="menuTexto" mnemonicParsing="false" text="Texto">
                     <items>
-                      <MenuItem id="itemMayusculas" mnemonicParsing="false" text="MAYÚSCULAS" />
-                      <MenuItem id="itemMinusculas" mnemonicParsing="false" text="minúsculas" />
+                      <MenuItem id="itemMayusculas" fx:id="itemMayusculas" mnemonicParsing="false" onAction="#textoMayusculas" text="MAYÚSCULAS" />
+                      <MenuItem id="itemMinusculas" fx:id="itemMinusculas" mnemonicParsing="false" onAction="#textoMinusculas" text="minúsculas" />
                     </items>
                   </Menu>
                   <Menu id="menuFuente" mnemonicParsing="false" text="Fuente">
@@ -49,9 +49,9 @@
                   </Menu>
                   <Menu id="menuTamaño" mnemonicParsing="false" text="Tamaño">
                     <items>
-                      <MenuItem id="itemTamanioDoce" mnemonicParsing="false" text="12" />
-                        <MenuItem id="itemTamanioDieciseis" mnemonicParsing="false" text="16" />
-                        <MenuItem id="itemTamanioDieciocho" mnemonicParsing="false" text="18" />
+                      <MenuItem id="itemTamanioDoce" fx:id="itemTamanio12" mnemonicParsing="false" onAction="#cambiarTamanio12" text="12" />
+                        <MenuItem id="itemTamanioDieciseis" fx:id="itemTamanio16" mnemonicParsing="false" onAction="#cambiarTamanio16" text="16" />
+                        <MenuItem id="itemTamanioDieciocho" fx:id="itemTamanio18" mnemonicParsing="false" onAction="#cambiarTamanio18" text="18" />
                     </items>
                   </Menu>
               </items>
