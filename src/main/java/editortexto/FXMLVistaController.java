@@ -83,6 +83,10 @@ public class FXMLVistaController implements Initializable {
  
     @FXML
     private TextArea areaTexto;
+    @FXML
+    private MenuItem btnGuardar;
+    @FXML
+    private MenuItem btnGuardarComo;
     
     
     
