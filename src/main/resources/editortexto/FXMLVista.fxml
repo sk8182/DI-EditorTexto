@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -8,70 +9,6 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="editortexto.FXMLVistaController">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu id="itemArchivo" mnemonicParsing="false" text="Archivo">
-            <items>
-                  <MenuItem id="botonNuevo" fx:id="itemNuevo" mnemonicParsing="false" onAction="#nuevaVentana" text="Nuevo" />
-                  <MenuItem id="itemAbrir" fx:id="itemAbrir" mnemonicParsing="false" onAction="#abrirArchivo" text="Abrir" />
-                  <MenuItem id="itemGuardar" fx:id="itemGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
-                  <MenuItem id="itemGuardarComo" fx:id="itemGuardarComo" mnemonicParsing="false" onAction="#guardarComo" text="Guardar como" />
-              <MenuItem id="itemSalir" fx:id="itemSalir" mnemonicParsing="false" onAction="#salir" text="Salir" />
-            </items>
-          </Menu>
-          <Menu id="menuEdicion" mnemonicParsing="false" text="Edición">
-            <items>
-                  <MenuItem id="itemBuscar" fx:id="itemBuscar" mnemonicParsing="false" onAction="#buscarCoincidencias" text="Buscar" />
-                   <MenuItem id="itemReemplazar" fx:id="itemReemplazar" mnemonicParsing="false" onAction="#reemplazar" text="Reemplazar" />
-            </items>
-          </Menu>
-            <Menu id="menuFormato" mnemonicParsing="false" text="Formato">
-              <items>
-                  <Menu id="menuEstilo" mnemonicParsing="false" text="Estilo">
-                    <items>
-                        <MenuItem id="itemNegrita" fx:id="itemNegrita" mnemonicParsing="false" onAction="#estiloNegrita" text="negrita" />
-                        <MenuItem id="itemCursiva" fx:id="itemCursiva" mnemonicParsing="false" onAction="#estiloCursiva" text="cursiva" />
-                    </items>
-                  </Menu>
-                  <Menu id="menuTexto" mnemonicParsing="false" text="Texto">
-                    <items>
-                      <MenuItem id="itemMayusculas" fx:id="itemMayusculas" mnemonicParsing="false" onAction="#textoMayusculas" text="MAYÚSCULAS" />
-                      <MenuItem id="itemMinusculas" fx:id="itemMinusculas" mnemonicParsing="false" onAction="#textoMinusculas" text="minúsculas" />
-                    </items>
-                  </Menu>
-                  <Menu id="menuFuente" mnemonicParsing="false" text="Fuente">
-                    <items>
-                      <MenuItem id="itemArial" fx:id="itemArial" mnemonicParsing="false" onAction="#cambiarFuenteArial" text="Arial" />
-                        <MenuItem id="itemCourier" fx:id="itemCourier" mnemonicParsing="false" onAction="#cambiarFuenteCourier" text="Courier" />
-                        <MenuItem id="itemVerdana" fx:id="itemVerdana" mnemonicParsing="false" onAction="#cambiarFuenteVerdana" text="Verdana" />
-                    </items>
-                  </Menu>
-                  <Menu id="menuTamaño" mnemonicParsing="false" text="Tamaño">
-                    <items>
-                      <MenuItem id="itemTamanioDoce" fx:id="itemTamanio12" mnemonicParsing="false" onAction="#cambiarTamanio12" text="12" />
-                        <MenuItem id="itemTamanioDieciseis" fx:id="itemTamanio16" mnemonicParsing="false" onAction="#cambiarTamanio16" text="16" />
-                        <MenuItem id="itemTamanioDieciocho" fx:id="itemTamanio18" mnemonicParsing="false" onAction="#cambiarTamanio18" text="18" />
-                    </items>
-                  </Menu>
-              </items>
-            </Menu>
-            <Menu id="menuVer" mnemonicParsing="false" text="Ver">
-              <items>
-                <MenuItem id="itemBarraEstado" mnemonicParsing="false" text="Ocultar barra de estado" />
-              </items>
-            </Menu>
-          <Menu id="menuAyuda" mnemonicParsing="false" text="Ayuda">
-            <items>
-              <MenuItem id="itemAcercaDe" mnemonicParsing="false" text="Acerca de..." />
-            </items>
-          </Menu>
-        </menus>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </MenuBar>
-   </top>
    <center>
       <TextArea id="areaTexto" fx:id="areaTexto" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -79,4 +16,99 @@
          </BorderPane.margin>
       </TextArea>
    </center>
+   <top>
+      <VBox id="contenedorTop" fx:id="contenedorTop" prefHeight="61.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar id="menuTop" fx:id="menuTop">
+               <menus>
+                  <Menu id="itemArchivo" mnemonicParsing="false" text="Archivo">
+                     <items>
+                        <MenuItem id="botonNuevo" fx:id="itemNuevo" mnemonicParsing="false" onAction="#nuevaVentana" text="Nuevo" />
+                        <MenuItem id="itemAbrir" fx:id="itemAbrir" mnemonicParsing="false" onAction="#abrirArchivo" text="Abrir" />
+                        <MenuItem id="itemGuardar" fx:id="itemGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
+                        <MenuItem id="itemGuardarComo" fx:id="itemGuardarComo" mnemonicParsing="false" onAction="#guardarComo" text="Guardar como" />
+                        <MenuItem id="itemSalir" fx:id="itemSalir" mnemonicParsing="false" onAction="#salir" text="Salir" />
+                     </items>
+                  </Menu>
+                  <Menu id="menuEdicion" mnemonicParsing="false" text="Edición">
+                     <items>
+                        <MenuItem id="itemBuscar" fx:id="itemBuscar" mnemonicParsing="false" onAction="#buscarCoincidencias" text="Buscar" />
+                        <MenuItem id="itemReemplazar" fx:id="itemReemplazar" mnemonicParsing="false" onAction="#reemplazar" text="Reemplazar" />
+                     </items>
+                  </Menu>
+                  <Menu id="menuFormato" mnemonicParsing="false" text="Formato">
+                     <items>
+                        <Menu id="menuEstilo" mnemonicParsing="false" text="Estilo">
+                           <items>
+                              <MenuItem id="itemNegrita" mnemonicParsing="false" text="negrita" />
+                              <MenuItem id="itemCursiva" mnemonicParsing="false" text="cursiva" />
+                           </items>
+                        </Menu>
+                        <Menu id="menuTexto" mnemonicParsing="false" text="Texto">
+                           <items>
+                              <MenuItem id="itemMayusculas" mnemonicParsing="false" text="MAYÚSCULAS" />
+                              <MenuItem id="itemMinusculas" mnemonicParsing="false" text="minúsculas" />
+                           </items>
+                        </Menu>
+                        <Menu id="menuFuente" mnemonicParsing="false" text="Fuente">
+                           <items>
+                              <MenuItem id="itemArial" fx:id="itemArial" mnemonicParsing="false" onAction="#cambiarFuenteArial" text="Arial" />
+                              <MenuItem id="itemCourier" fx:id="itemCourier" mnemonicParsing="false" onAction="#cambiarFuenteCourier" text="Courier" />
+                              <MenuItem id="itemVerdana" fx:id="itemVerdana" mnemonicParsing="false" onAction="#cambiarFuenteVerdana" text="Verdana" />
+                           </items>
+                        </Menu>
+                        <Menu id="menuTamaño" mnemonicParsing="false" text="Tamaño">
+                           <items>
+                              <MenuItem id="itemTamanioDoce" mnemonicParsing="false" text="12" />
+                              <MenuItem id="itemTamanioDieciseis" mnemonicParsing="false" text="16" />
+                              <MenuItem id="itemTamanioDieciocho" mnemonicParsing="false" text="18" />
+                           </items>
+                        </Menu>
+                     </items>
+                  </Menu>
+                  <Menu id="menuVer" mnemonicParsing="false" text="Ver">
+                     <items>
+                        <MenuItem id="itemBarraEstado" mnemonicParsing="false" text="Ocultar barra de estado" />
+                     </items>
+                  </Menu>
+                  <Menu id="menuAyuda" mnemonicParsing="false" text="Ayuda">
+                     <items>
+                        <MenuItem id="itemAcercaDe" mnemonicParsing="false" text="Acerca de..." />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+            <MenuBar id="menuBotones" fx:id="menuBotones" prefHeight="47.0" prefWidth="600.0">
+              <menus>
+                <Menu mnemonicParsing="false">
+                     <graphic>
+                        <Button id="btnNuevo" fx:id="btnNuevo" mnemonicParsing="false" onAction="#nuevaVentana" prefHeight="25.0" prefWidth="30.0">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/nuevo.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </graphic>
+                </Menu>
+                  <Menu mnemonicParsing="false">
+                     <graphic>
+                        <Button id="btnAbrir" fx:id="btnAbrir" mnemonicParsing="false" onAction="#abrirArchivo" prefHeight="25.0" prefWidth="30.0">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/abrir.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </graphic>
+                  </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </VBox>
+   </top>
 </BorderPane>

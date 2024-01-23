@@ -7,8 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -20,16 +18,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.IndexRange;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.ToolBar;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -39,74 +35,68 @@ import javafx.stage.Stage;
  * @author julio
  */
 public class FXMLVistaController implements Initializable {
-
-    private Label label;
+    
+    
     @FXML
-    private MenuItem itemArial;
+    private VBox contenedorTop;
+     
     @FXML
-    private TextArea areaTexto;
-    @FXML
-    private MenuItem itemCourier;
-    @FXML
-    private MenuItem itemVerdana;
+    private MenuBar menuTop;
+    //menuTop contiene:
     @FXML
     private MenuItem itemNuevo;
     @FXML
     private MenuItem itemAbrir;
     @FXML
     private MenuItem itemGuardar;
-
-    private File archivoGuardado;  // Mantén una referencia al archivo guardado
     @FXML
     private MenuItem itemGuardarComo;
     @FXML
     private MenuItem itemSalir;
+    
+    private File archivoGuardado;  // Mantiene una referencia al archivo guardado
+    
+    
     @FXML
     private MenuItem itemBuscar;
     @FXML
     private MenuItem itemReemplazar;
+    
+    
     @FXML
-    private MenuItem itemNegrita;
+    private MenuItem itemArial;
     @FXML
-    private MenuItem itemCursiva;
+    private MenuItem itemCourier;
     @FXML
-    private MenuItem itemMayusculas;
+    private MenuItem itemVerdana;
+   
+    
+    //EMPIEZA EL MENU BOTONES
     @FXML
-    private MenuItem itemMinusculas;
+    private MenuBar menuBotones;
+    
     @FXML
-    private MenuItem itemTamanio12;
+    private Button btnNuevo;
     @FXML
-    private MenuItem itemTamanio16;
+    private Button btnAbrir;
+    
+ 
     @FXML
-    private MenuItem itemTamanio18;
-
+    private TextArea areaTexto;
+    
+    
+    
+    
+    
+  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-
-    @FXML
-    private void cambiarFuenteArial(ActionEvent event) {
-
-        areaTexto.setStyle("-fx-font-family: Arial;");
-
-    }
-
-    @FXML
-    private void cambiarFuenteCourier(ActionEvent event) {
-
-        areaTexto.setStyle("-fx-font-family: Courier New;");
-
-    }
-
-    @FXML
-    private void cambiarFuenteVerdana(ActionEvent event) {
-
-        areaTexto.setStyle("-fx-font-family: Verdana;");
-
-    }
-
-    @FXML
+    
+    ///////////////////////FUNCIONES PARA EL MENU ARCHIVO
+    
+     @FXML
     private void nuevaVentana(ActionEvent event) {
 
         try {
@@ -213,6 +203,34 @@ public class FXMLVistaController implements Initializable {
         Platform.exit();// Método preferido para cerrar una aplicación JavaFX
 
     }
+    
+    
+    ///////////////FIN FUNCIONES MENU ARCHIVO//////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////
+    
+
+    @FXML
+    private void cambiarFuenteArial(ActionEvent event) {
+
+        areaTexto.setStyle("-fx-font-family: Arial;");
+
+    }
+
+    @FXML
+    private void cambiarFuenteCourier(ActionEvent event) {
+
+        areaTexto.setStyle("-fx-font-family: Courier New;");
+
+    }
+
+    @FXML
+    private void cambiarFuenteVerdana(ActionEvent event) {
+
+        areaTexto.setStyle("-fx-font-family: Verdana;");
+
+    }
+
+   
 
     @FXML
     private void buscarCoincidencias(ActionEvent event) {
@@ -268,15 +286,13 @@ public class FXMLVistaController implements Initializable {
         alert.showAndWait();
     }
 
-    @FXML
     private void estiloNegrita(ActionEvent event) {
 
-        String estiloActual = areaTexto.getStyle();
-        areaTexto.setStyle(estiloActual + "-fx-font-weight: bold;");
-
+       String estiloActual = areaTexto.getStyle();
+       areaTexto.setStyle(estiloActual + "-fx-font-weight: bold;");
+               
     }
 
-    @FXML
     private void estiloCursiva(ActionEvent event) {
 
         String estiloActual = areaTexto.getStyle();
@@ -284,15 +300,16 @@ public class FXMLVistaController implements Initializable {
 
     }
 
-    @FXML
     private void textoMayusculas(ActionEvent event) {
 
+        
         String textoActual = areaTexto.getText();
         areaTexto.setText(textoActual.toUpperCase());
 
     }
+    
+    
 
-    @FXML
     private void textoMinusculas(ActionEvent event) {
 
         String textoActual = areaTexto.getText();
@@ -300,17 +317,14 @@ public class FXMLVistaController implements Initializable {
 
     }
 
-       @FXML
     private void cambiarTamanio12(ActionEvent event) {
         cambiarTamanioTexto(12);
     }
 
-    @FXML
     private void cambiarTamanio16(ActionEvent event) {
         cambiarTamanioTexto(16);
     }
 
-    @FXML
     private void cambiarTamanio18(ActionEvent event) {
         cambiarTamanioTexto(18);
     }
@@ -321,3 +335,19 @@ public class FXMLVistaController implements Initializable {
 
 
 }
+// Obtener el texto seleccionado
+//            String selectedText = textArea.getSelectedText();
+//
+//            // Verificar si se seleccionó algún texto
+//            if (!selectedText.isEmpty()) {
+//                // Cortar el texto seleccionado al portapapeles
+//                Clipboard clipboard = Clipboard.getSystemClipboard();
+//                ClipboardContent content = new ClipboardContent();
+//                content.putString(selectedText);
+//                clipboard.setContent(content);
+//
+//                // Borrar el texto seleccionado del área de texto
+//                int start = textArea.getSelection().getStart();
+//                int end = textArea.getSelection().getEnd();
+//                textArea.replaceText(start, end, "");
+//            }
