@@ -73,23 +73,74 @@
                   </Menu>
                   <Menu id="menuEdicion" mnemonicParsing="false" text="Edición">
                      <items>
-                        <MenuItem id="itemBuscar" fx:id="itemBuscar" mnemonicParsing="false" onAction="#buscarCoincidencias" text="Buscar" />
-                        <MenuItem id="itemReemplazar" fx:id="itemReemplazar" mnemonicParsing="false" onAction="#reemplazar" text="Reemplazar" />
+                        <MenuItem id="itemBuscar" fx:id="itemBuscar" mnemonicParsing="false" onAction="#buscarCoincidencias" text="Buscar">
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/buscar.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></MenuItem>
+                        <MenuItem id="itemReemplazar" fx:id="itemReemplazar" mnemonicParsing="false" onAction="#reemplazar" text="Reemplazar">
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/reemplazar.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></MenuItem>
+                     </items>
+                  </Menu>
+                  <Menu id="menuEstilo" fx:id="itemEstilo" mnemonicParsing="false" text="Estilo">
+                     <items>
+                        <MenuItem id="itemNegrita" fx:id="itemNegrita" mnemonicParsing="false" onAction="#estiloNegrita" text="negrita">
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/negrita.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem id="itemCursiva" fx:id="itemCursiva" mnemonicParsing="false" onAction="#estiloCursiva" text="cursiva">
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/cursiva.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
                      </items>
                   </Menu>
                   <Menu id="menuFormato" mnemonicParsing="false" text="Formato">
                      <items>
-                        <Menu id="menuEstilo" mnemonicParsing="false" text="Estilo">
-                           <items>
-                              <MenuItem id="itemNegrita" fx:id="itemNegrita" mnemonicParsing="false" onAction="#estiloNegrita" text="negrita" />
-                              <MenuItem id="itemCursiva" fx:id="itemCursiva" mnemonicParsing="false" onAction="#estiloCursiva" text="cursiva" />
-                           </items>
-                        </Menu>
                         <Menu id="menuTexto" mnemonicParsing="false" text="Texto">
                            <items>
-                              <MenuItem id="itemMay" fx:id="itemMay" mnemonicParsing="false" onAction="#textoMayusculas" text="MAYÚSCULAS" />
-                              <MenuItem id="itemMin" fx:id="itemMin" mnemonicParsing="false" onAction="#textoMinusculas" text="minúsculas" />
+                              <MenuItem id="itemMay" fx:id="itemMay" mnemonicParsing="false" onAction="#textoMayusculas" text="MAYÚSCULAS">
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/mayusculas.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></MenuItem>
+                              <MenuItem id="itemMin" fx:id="itemMin" mnemonicParsing="false" onAction="#textoMinusculas" text="minúsculas">
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/minusculas.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></MenuItem>
                            </items>
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/texto.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Menu>
                         <Menu id="menuFuente" mnemonicParsing="false" text="Fuente">
                            <items>
@@ -97,6 +148,13 @@
                               <MenuItem id="itemCourier" fx:id="itemCourier" mnemonicParsing="false" onAction="#cambiarFuenteCourier" text="Courier" />
                               <MenuItem id="itemVerdana" fx:id="itemVerdana" mnemonicParsing="false" onAction="#cambiarFuenteVerdana" text="Verdana" />
                            </items>
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/tipografia%20(1).png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Menu>
                         <Menu id="menuTamaño" mnemonicParsing="false" text="Tamaño">
                            <items>
