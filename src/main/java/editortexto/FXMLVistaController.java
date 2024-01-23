@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -23,6 +24,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -35,14 +37,15 @@ import javafx.stage.Stage;
  * @author julio
  */
 public class FXMLVistaController implements Initializable {
-    
-    
+
     @FXML
     private VBox contenedorTop;
-     
+
     @FXML
     private MenuBar menuTop;
     //menuTop contiene:
+
+    //ITEMS ARCHIVO
     @FXML
     private MenuItem itemNuevo;
     @FXML
@@ -53,54 +56,84 @@ public class FXMLVistaController implements Initializable {
     private MenuItem itemGuardarComo;
     @FXML
     private MenuItem itemSalir;
-    
+
     private File archivoGuardado;  // Mantiene una referencia al archivo guardado
-    
-    
+    ///////////////////////////////////
+
+    //ITEMS EDICION
     @FXML
     private MenuItem itemBuscar;
     @FXML
     private MenuItem itemReemplazar;
-    
-    
+    ////////////////////////////////////
+
+    //ITEMS FORMATO
     @FXML
     private MenuItem itemArial;
     @FXML
     private MenuItem itemCourier;
     @FXML
     private MenuItem itemVerdana;
-   
-    
+
+    @FXML
+    private MenuItem itemNegrita;
+    @FXML
+    private MenuItem itemCursiva;
+    @FXML
+    private MenuItem itemMay;
+    @FXML
+    private MenuItem itemMin;
+    @FXML
+    private MenuItem itemTamDoce;
+    @FXML
+    private MenuItem itemTamDieciseis;
+    @FXML
+    private MenuItem itemTamDieciocho;
+    /////////////////////////////////////////////////
+
+    //ITEMS VER///////////
+    @FXML
+    private MenuItem itemBarraBotones;
+
+    /////////////////////////////
     //EMPIEZA EL MENU BOTONES
     @FXML
     private MenuBar menuBotones;
-    
+
     @FXML
     private Button btnNuevo;
     @FXML
     private Button btnAbrir;
-    
- 
-    @FXML
-    private TextArea areaTexto;
     @FXML
     private MenuItem btnGuardar;
     @FXML
     private MenuItem btnGuardarComo;
+
+    //AREA TEXTO
+    @FXML
+    private TextArea areaTexto;
+    
+    //ZONA BAJA
+    @FXML
+    private VBox contenedorBot;
+    
+    /////////////
+    //BARRA UTILIDADES BAJA
+    
+    @FXML
+    private ToolBar toolBarBot;
     
     
     
-    
-    
-  
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-    
+
+    /////////////////////////////////////////////////////////////////////
     ///////////////////////FUNCIONES PARA EL MENU ARCHIVO
-    
-     @FXML
+    @FXML
     private void nuevaVentana(ActionEvent event) {
 
         try {
@@ -207,35 +240,11 @@ public class FXMLVistaController implements Initializable {
         Platform.exit();// Método preferido para cerrar una aplicación JavaFX
 
     }
-    
-    
+
     ///////////////FIN FUNCIONES MENU ARCHIVO//////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
-    
-
-    @FXML
-    private void cambiarFuenteArial(ActionEvent event) {
-
-        areaTexto.setStyle("-fx-font-family: Arial;");
-
-    }
-
-    @FXML
-    private void cambiarFuenteCourier(ActionEvent event) {
-
-        areaTexto.setStyle("-fx-font-family: Courier New;");
-
-    }
-
-    @FXML
-    private void cambiarFuenteVerdana(ActionEvent event) {
-
-        areaTexto.setStyle("-fx-font-family: Verdana;");
-
-    }
-
-   
-
+    /////////////////////////////////////////////////////////////////////
+    ///////////////////////FUNCIONES PARA EL MENU EDICIóN
     @FXML
     private void buscarCoincidencias(ActionEvent event) {
 
@@ -290,13 +299,19 @@ public class FXMLVistaController implements Initializable {
         alert.showAndWait();
     }
 
+    ///////////////FIN FUNCIONES MENU EDICIóN//////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////
+    ///////////////////////FUNCIONES PARA EL MENU FORMATO
+    @FXML
     private void estiloNegrita(ActionEvent event) {
 
-       String estiloActual = areaTexto.getStyle();
-       areaTexto.setStyle(estiloActual + "-fx-font-weight: bold;");
-               
+        String estiloActual = areaTexto.getStyle();
+        areaTexto.setStyle(estiloActual + "-fx-font-weight: bold;");
+
     }
 
+    @FXML
     private void estiloCursiva(ActionEvent event) {
 
         String estiloActual = areaTexto.getStyle();
@@ -304,31 +319,66 @@ public class FXMLVistaController implements Initializable {
 
     }
 
+    @FXML
     private void textoMayusculas(ActionEvent event) {
 
-        
-        String textoActual = areaTexto.getText();
-        areaTexto.setText(textoActual.toUpperCase());
+        String selecTexto = areaTexto.getSelectedText();
+
+        // Verificar si se seleccionó algún texto
+        if (!selecTexto.isEmpty()) {
+
+            areaTexto.replaceSelection(selecTexto.toUpperCase());
+        }
 
     }
-    
-    
 
+    @FXML
     private void textoMinusculas(ActionEvent event) {
 
-        String textoActual = areaTexto.getText();
-        areaTexto.setText(textoActual.toLowerCase());
+//        String textoActual = areaTexto.getText();
+//        areaTexto.setText(textoActual.toLowerCase());
+        String selecTexto = areaTexto.getSelectedText();
+
+        // Verificar si se seleccionó algún texto
+        if (!selecTexto.isEmpty()) {
+
+            areaTexto.replaceSelection(selecTexto.toLowerCase());
+        }
 
     }
 
+    @FXML
+    private void cambiarFuenteArial(ActionEvent event) {
+
+        areaTexto.setStyle("-fx-font-family: Arial;");
+
+    }
+
+    @FXML
+    private void cambiarFuenteCourier(ActionEvent event) {
+
+        areaTexto.setStyle("-fx-font-family: Courier New;");
+
+    }
+
+    @FXML
+    private void cambiarFuenteVerdana(ActionEvent event) {
+
+        areaTexto.setStyle("-fx-font-family: Verdana;");
+
+    }
+
+    @FXML
     private void cambiarTamanio12(ActionEvent event) {
         cambiarTamanioTexto(12);
     }
 
+    @FXML
     private void cambiarTamanio16(ActionEvent event) {
         cambiarTamanioTexto(16);
     }
 
+    @FXML
     private void cambiarTamanio18(ActionEvent event) {
         cambiarTamanioTexto(18);
     }
@@ -336,8 +386,27 @@ public class FXMLVistaController implements Initializable {
     private void cambiarTamanioTexto(int tamanio) {
         areaTexto.setStyle("-fx-font-size: " + tamanio + "px;");
     }
+    ///////////////FIN FUNCIONES MENU FORMATO//////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////
 
+    /////////////////////////////////////////////////////////////////////
+    ///////////////////////FUNCIONES PARA EL MENU VER
+    @FXML
+    private void verUocultarBotones(ActionEvent event) {
 
+        if (menuBotones.isVisible()) {
+            
+            menuBotones.setVisible(false);
+           
+        } else {
+            // Los botones están ocultos, entonces los mostramos
+            menuBotones.setVisible(true);
+           
+        }
+    }
+
+    ///////////////FIN FUNCIONES MENU VER//////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////
 }
 // Obtener el texto seleccionado
 //            String selectedText = textArea.getSelectedText();

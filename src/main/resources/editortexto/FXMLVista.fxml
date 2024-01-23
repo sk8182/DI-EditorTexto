@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
@@ -10,7 +11,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="editortexto.FXMLVistaController">
    <center>
-      <TextArea id="areaTexto" fx:id="areaTexto" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TextArea id="areaTexto" fx:id="areaTexto" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="2.0" />
          </BorderPane.margin>
@@ -80,14 +81,14 @@
                      <items>
                         <Menu id="menuEstilo" mnemonicParsing="false" text="Estilo">
                            <items>
-                              <MenuItem id="itemNegrita" mnemonicParsing="false" text="negrita" />
-                              <MenuItem id="itemCursiva" mnemonicParsing="false" text="cursiva" />
+                              <MenuItem id="itemNegrita" fx:id="itemNegrita" mnemonicParsing="false" onAction="#estiloNegrita" text="negrita" />
+                              <MenuItem id="itemCursiva" fx:id="itemCursiva" mnemonicParsing="false" onAction="#estiloCursiva" text="cursiva" />
                            </items>
                         </Menu>
                         <Menu id="menuTexto" mnemonicParsing="false" text="Texto">
                            <items>
-                              <MenuItem id="itemMayusculas" mnemonicParsing="false" text="MAYÚSCULAS" />
-                              <MenuItem id="itemMinusculas" mnemonicParsing="false" text="minúsculas" />
+                              <MenuItem id="itemMay" fx:id="itemMay" mnemonicParsing="false" onAction="#textoMayusculas" text="MAYÚSCULAS" />
+                              <MenuItem id="itemMin" fx:id="itemMin" mnemonicParsing="false" onAction="#textoMinusculas" text="minúsculas" />
                            </items>
                         </Menu>
                         <Menu id="menuFuente" mnemonicParsing="false" text="Fuente">
@@ -99,9 +100,9 @@
                         </Menu>
                         <Menu id="menuTamaño" mnemonicParsing="false" text="Tamaño">
                            <items>
-                              <MenuItem id="itemTamanioDoce" mnemonicParsing="false" text="12" />
-                              <MenuItem id="itemTamanioDieciseis" mnemonicParsing="false" text="16" />
-                              <MenuItem id="itemTamanioDieciocho" mnemonicParsing="false" text="18" />
+                              <MenuItem id="itemTamDoce" fx:id="itemTamDoce" mnemonicParsing="false" onAction="#cambiarTamanio12" text="12" />
+                              <MenuItem id="itemTamDieciseis" fx:id="itemTamDieciseis" mnemonicParsing="false" onAction="#cambiarTamanio16" text="16" />
+                              <MenuItem id="itemTamDieciocho" fx:id="itemTamDieciocho" mnemonicParsing="false" onAction="#cambiarTamanio18" text="18" />
                            </items>
                         </Menu>
                      </items>
@@ -109,6 +110,7 @@
                   <Menu id="menuVer" mnemonicParsing="false" text="Ver">
                      <items>
                         <MenuItem id="itemBarraEstado" mnemonicParsing="false" text="Ocultar barra de estado" />
+                        <MenuItem id="itemBarraBotones" fx:id="itemBarraBotones" mnemonicParsing="false" onAction="#verUocultarBotones" text="Ver/Ocultar barra de botones" />
                      </items>
                   </Menu>
                   <Menu id="menuAyuda" mnemonicParsing="false" text="Ayuda">
@@ -190,4 +192,22 @@
          </children>
       </VBox>
    </top>
+   <bottom>
+      <VBox id="contenedorBot" fx:id="contenedorBot" prefHeight="29.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <ToolBar id="toolBarBot" fx:id="toolBarBot" prefHeight="29.0" prefWidth="600.0">
+               <items>
+                  <ToolBar id="toolbarBuscar" fx:id="toolbarBuscar" prefHeight="40.0" prefWidth="211.0">
+                     <items>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Siguiente" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="32.0" text="Button" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Anterior" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="37.0" text="Button" />
+                     </items>
+                  </ToolBar>
+               </items>
+            </ToolBar>
+         </children>
+      </VBox>
+   </bottom>
 </BorderPane>
