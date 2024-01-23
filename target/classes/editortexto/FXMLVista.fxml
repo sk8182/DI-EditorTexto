@@ -23,11 +23,51 @@
                <menus>
                   <Menu id="itemArchivo" mnemonicParsing="false" text="Archivo">
                      <items>
-                        <MenuItem id="botonNuevo" fx:id="itemNuevo" mnemonicParsing="false" onAction="#nuevaVentana" text="Nuevo" />
-                        <MenuItem id="itemAbrir" fx:id="itemAbrir" mnemonicParsing="false" onAction="#abrirArchivo" text="Abrir" />
-                        <MenuItem id="itemGuardar" fx:id="itemGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
-                        <MenuItem id="itemGuardarComo" fx:id="itemGuardarComo" mnemonicParsing="false" onAction="#guardarComo" text="Guardar como" />
-                        <MenuItem id="itemSalir" fx:id="itemSalir" mnemonicParsing="false" onAction="#salir" text="Salir" />
+                        <MenuItem id="botonNuevo" fx:id="itemNuevo" mnemonicParsing="false" onAction="#nuevaVentana" text="Nuevo">
+                           <graphic>
+                              <ImageView fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/nuevo.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem id="itemAbrir" fx:id="itemAbrir" mnemonicParsing="false" onAction="#abrirArchivo" text="Abrir">
+                           <graphic>
+                              <ImageView fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/abrir.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem id="itemGuardar" fx:id="itemGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar">
+                           <graphic>
+                              <ImageView fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/guardar%20.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem id="itemGuardarComo" fx:id="itemGuardarComo" mnemonicParsing="false" onAction="#guardarComo" text="Guardar como">
+                           <graphic>
+                              <ImageView fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/guardar_como.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem id="itemSalir" fx:id="itemSalir" mnemonicParsing="false" onAction="#salir" text="Salir">
+                           <graphic>
+                              <ImageView fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/salir.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
                      </items>
                   </Menu>
                   <Menu id="menuEdicion" mnemonicParsing="false" text="Edición">
@@ -90,33 +130,25 @@
                                  </image>
                               </ImageView>
                            </graphic>
+                           <tooltip>
+                              <Tooltip text="Nuevo" />
+                           </tooltip>
                         </Button>
                      </graphic>
                 </Menu>
                   <Menu mnemonicParsing="false">
                      <graphic>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0">
+                        <Button id="btnAbrir" fx:id="btnAbrir" mnemonicParsing="false" onAction="#abrirArchivo" prefHeight="25.0" prefWidth="30.0">
                            <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/abrir.png" />
+                                 </image>
+                              </ImageView>
                            </graphic>
-                        </Button>
-                     </graphic>
-                  </Menu>
-                  <Menu mnemonicParsing="false">
-                     <graphic>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0">
-                           <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                        </Button>
-                     </graphic>
-                  </Menu>
-                  <Menu mnemonicParsing="false">
-                     <graphic>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0">
-                           <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Abrir" />
+                           </tooltip>
                         </Button>
                      </graphic>
                   </Menu>
