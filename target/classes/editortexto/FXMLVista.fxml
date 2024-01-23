@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
@@ -191,4 +192,42 @@
          </children>
       </VBox>
    </top>
+   <bottom>
+      <VBox id="contenedorBot" fx:id="contenedorBot" prefHeight="29.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <ToolBar id="toolBarBot" fx:id="toolBarBot" prefHeight="33.0" prefWidth="600.0">
+               <items>
+                  <ToolBar id="toolbarBuscar" fx:id="toolbarBuscar" prefHeight="25.0" prefWidth="211.0" visible="false">
+                     <items>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Siguiente" />
+                        <Button id="btnSiguiente" fx:id="btnSiguiente" mnemonicParsing="false" onAction="#buscarSiguiente" prefHeight="9.0" prefWidth="24.0">
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/siguiente.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Siguiente coincidencia" />
+                           </tooltip></Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Anterior" />
+                        <Button id="btnAnterior" fx:id="btnAnterior" mnemonicParsing="false" onAction="#buscarAnterior" prefHeight="12.0" prefWidth="22.0">
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/anterior.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Anterior coincidencia" />
+                           </tooltip></Button>
+                     </items>
+                  </ToolBar>
+               </items>
+            </ToolBar>
+         </children>
+      </VBox>
+   </bottom>
 </BorderPane>

@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -63,6 +65,11 @@ public class FXMLVistaController implements Initializable {
     //ITEMS EDICION
     @FXML
     private MenuItem itemBuscar;
+
+    private List<Integer> indiceCoincidencias = new ArrayList<>();
+    private String textoABuscar;
+    private int indiceActual = -1;
+
     @FXML
     private MenuItem itemReemplazar;
     ////////////////////////////////////
@@ -112,19 +119,22 @@ public class FXMLVistaController implements Initializable {
     //AREA TEXTO
     @FXML
     private TextArea areaTexto;
-    
+
     //ZONA BAJA
     @FXML
     private VBox contenedorBot;
-    
+
     /////////////
     //BARRA UTILIDADES BAJA
-    
     @FXML
     private ToolBar toolBarBot;
-    
-    
-    
+    @FXML
+    private ToolBar toolbarBuscar;
+
+    @FXML
+    private Button btnSiguiente;
+    @FXML
+    private Button btnAnterior;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -248,24 +258,55 @@ public class FXMLVistaController implements Initializable {
     @FXML
     private void buscarCoincidencias(ActionEvent event) {
 
-        //A ESTO DARLE UNA VUELTA, PUEDO HACER UNA BARRA QUE SE MUESTRE ABAJO Y SI NO HAY PALABRA A BUSCAR QUE SE OCULTE O CERRARLA CON UNA X O ALGO 
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Buscar Coincidencias");
         dialog.setHeaderText("Ingrese el texto a buscar:");
 
         Optional<String> resultado = dialog.showAndWait();
-        resultado.ifPresent(textoABuscar -> {
+        resultado.ifPresent(texto -> {
+            textoABuscar = texto;
+            indiceCoincidencias.clear();
             String contenido = areaTexto.getText();
             int index = contenido.indexOf(textoABuscar);
 
-            if (index != -1) {
-                areaTexto.selectRange(index, index + textoABuscar.length());
+            while (index != -1) {
+                indiceCoincidencias.add(index);
+                index = contenido.indexOf(textoABuscar, index + 1);
+            }
+
+            if (!indiceCoincidencias.isEmpty()) {
+                indiceActual = 0;
+                seleccionarCoincidenciaActual();
             } else {
                 mostrarAlerta("Texto no encontrado", "El texto especificado no se encontró en el documento.");
             }
         });
+        toolbarBuscar.setVisible(true);
+    }
 
-        //A ESTO DARLE UNA VUELTA, PUEDO HACER UNA BARRA QUE SE MUESTRE ABAJO Y SI NO HAY PALABRA A BUSCAR QUE SE OCULTE O CERRARLA CON UNA X O ALGO 
+    @FXML
+    private void buscarSiguiente(ActionEvent event) {
+
+        if (!indiceCoincidencias.isEmpty() && indiceActual < indiceCoincidencias.size() - 1) {
+            indiceActual++;
+            seleccionarCoincidenciaActual();
+        }
+
+    }
+
+    @FXML
+    private void buscarAnterior(ActionEvent event) {
+
+        if (!indiceCoincidencias.isEmpty() && indiceActual > 0) {
+            indiceActual--;
+            seleccionarCoincidenciaActual();
+        }
+    }
+
+    private void seleccionarCoincidenciaActual() {
+        if (!indiceCoincidencias.isEmpty() && indiceActual < indiceCoincidencias.size()) {
+            areaTexto.selectRange(indiceCoincidencias.get(indiceActual), indiceCoincidencias.get(indiceActual) + textoABuscar.length());
+        }
     }
 
     @FXML
@@ -395,13 +436,13 @@ public class FXMLVistaController implements Initializable {
     private void verUocultarBotones(ActionEvent event) {
 
         if (menuBotones.isVisible()) {
-            
+
             menuBotones.setVisible(false);
-           
+
         } else {
             // Los botones están ocultos, entonces los mostramos
             menuBotones.setVisible(true);
-           
+
         }
     }
 
