@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="editortexto.FXMLVistaController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="editortexto.FXMLVistaController">
     <center>
         <TextArea id="areaTexto" fx:id="areaTexto" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER">
             <BorderPane.margin>
@@ -180,7 +180,7 @@
                         </Menu>
                         <Menu id="menuVer" mnemonicParsing="false" text="Ver">
                             <items>
-                                <MenuItem id="itemBarraEstado" mnemonicParsing="false" text="Ocultar barra de estado" />
+                                <MenuItem id="itemBarraEstado" fx:id="itemBarraEstado" mnemonicParsing="false" onAction="#verUocultarBarraEstado" text="Ver/Ocultar barra de estado" />
                                 <MenuItem id="itemBarraBotones" fx:id="itemBarraBotones" mnemonicParsing="false" onAction="#verUocultarBotones" text="Ver/Ocultar barra de botones" />
                             </items>
                         </Menu>
@@ -266,40 +266,73 @@
     <bottom>
         <VBox id="contenedorBot" fx:id="contenedorBot" prefHeight="29.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
-                <ToolBar id="toolBarBot" fx:id="toolBarBot" prefHeight="33.0" prefWidth="600.0">
-                    <items>
-                        <ToolBar id="toolbarBuscar" fx:id="toolbarBuscar" prefHeight="13.0" prefWidth="211.0">
-                            <items>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Siguiente" />
-                                <Button id="btnSiguiente" fx:id="btnSiguiente" mnemonicParsing="false" onAction="#buscarSiguiente" prefHeight="9.0" prefWidth="24.0">
-                                    <graphic>
-                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../img/siguiente.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                    <tooltip>
-                                        <Tooltip text="Siguiente coincidencia" />
-                                    </tooltip>
-                                </Button>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Anterior" />
-                                <Button id="btnAnterior" fx:id="btnAnterior" mnemonicParsing="false" onAction="#buscarAnterior" prefHeight="12.0" prefWidth="22.0">
-                                    <graphic>
-                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../img/anterior.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                    <tooltip>
-                                        <Tooltip text="Anterior coincidencia" />
-                                    </tooltip>
-                                </Button>
-                            </items>
-                        </ToolBar>
-                    </items>
-                </ToolBar>
+            <HBox prefHeight="39.0" prefWidth="600.0">
+               <children>
+                  <Label id="labelSiguiente" fx:id="labelCursor" contentDisplay="CENTER" text="Siguiente">
+                     <padding>
+                        <Insets left="10.0" right="5.0" top="2.0" />
+                     </padding>
+                  </Label>
+                          <Button id="btnAnterior" fx:id="btnAnterior" mnemonicParsing="false" onAction="#buscarAnterior" prefHeight="8.0" prefWidth="31.0">
+                              <graphic>
+                                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                          <Image url="@../img/anterior.png" />
+                                      </image>
+                                  </ImageView>
+                              </graphic>
+                              <tooltip>
+                                  <Tooltip text="Anterior coincidencia" />
+                              </tooltip>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                          </Button>
+                  <Label id="labelAnterior" contentDisplay="CENTER" text="Anterior">
+                     <padding>
+                        <Insets right="5.0" top="2.0" />
+                     </padding>
+                  </Label>
+                          <Button id="btnSiguiente" fx:id="btnSiguiente" mnemonicParsing="false" onAction="#buscarSiguiente" prefHeight="9.0" prefWidth="24.0">
+                              <graphic>
+                                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                          <Image url="@../img/siguiente.png" />
+                                      </image>
+                                  </ImageView>
+                              </graphic>
+                              <tooltip>
+                                  <Tooltip text="Siguiente coincidencia" />
+                              </tooltip>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                          </Button>
+                  <Label fx:id="labelCursor" alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Posición del cursor:">
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets right="10.0" top="2.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="labelCuentaPalabras" text="Recuento de Palabras:">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" top="2.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="labelCuentaLineas" text="Recuento de Líneas:">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" top="2.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="labelCodific" alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Codificación:">
+                     <HBox.margin>
+                        <Insets left="10.0" top="2.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
             </children>
         </VBox>
     </bottom>
