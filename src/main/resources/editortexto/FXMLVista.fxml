@@ -264,17 +264,27 @@
                                             </image>
                                         </ImageView>
                                     </graphic>
+                           <tooltip>
+                              <Tooltip text="Guardar" />
+                           </tooltip>
                                 </MenuButton>
                             </graphic>
                         </Menu>
                   <Menu mnemonicParsing="false">
                      <graphic>
-                        <ComboBox fx:id="comboBoxFuente" onAction="#cambiarFuenteCombo" prefHeight="32.0" prefWidth="150.0" />
+                        <ComboBox fx:id="comboBoxFuente" onAction="#cambiarFuenteCombo" prefHeight="32.0" prefWidth="150.0">
+                           <tooltip>
+                              <Tooltip text="Nombre del tipo de letra" />
+                           </tooltip></ComboBox>
                      </graphic>
                   </Menu>
                   <Menu mnemonicParsing="false">
                      <graphic>
-                        <ComboBox fx:id="comboBoxTamano" onAction="#cambiarTamanoCombo" prefHeight="39.0" prefWidth="150.0" />
+                        <ComboBox fx:id="comboBoxTamano" onAction="#cambiarTamanoCombo" prefHeight="39.0" prefWidth="150.0">
+                           <tooltip>
+                              <Tooltip text="Tamaño del tipo de letra" />
+                           </tooltip>
+                        </ComboBox>
                      </graphic></Menu>
                     </menus>
                 </MenuBar>
