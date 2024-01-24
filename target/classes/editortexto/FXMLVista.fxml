@@ -10,282 +10,297 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="editortexto.FXMLVistaController">
-   <center>
-      <TextArea id="areaTexto" fx:id="areaTexto" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="2.0" />
-         </BorderPane.margin>
-      </TextArea>
-   </center>
-   <top>
-      <VBox id="contenedorTop" fx:id="contenedorTop" prefHeight="61.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <MenuBar id="menuTop" fx:id="menuTop">
-               <menus>
-                  <Menu id="itemArchivo" mnemonicParsing="false" text="Archivo">
-                     <items>
-                        <MenuItem id="botonNuevo" fx:id="itemNuevo" mnemonicParsing="false" onAction="#nuevaVentana" text="Nuevo">
+    <center>
+        <TextArea id="areaTexto" fx:id="areaTexto" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="2.0" />
+            </BorderPane.margin>
+        </TextArea>
+    </center>
+    <top>
+        <VBox id="contenedorTop" fx:id="contenedorTop" prefHeight="61.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <MenuBar id="menuTop" fx:id="menuTop">
+                    <menus>
+                        <Menu id="menuArchivo" fx:id="menuArchivo" mnemonicParsing="false" text="Archivo">
+                            <items>
+                                <MenuItem id="botonNuevo" fx:id="itemNuevo" mnemonicParsing="false" onAction="#nuevaVentana" text="Nuevo">
+                                    <graphic>
+                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/nuevo.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </MenuItem>
+                                <MenuItem id="itemAbrir" fx:id="itemAbrir" mnemonicParsing="false" onAction="#abrirArchivo" text="Abrir">
+                                    <graphic>
+                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/abrir.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </MenuItem>
+                        <Menu id="menuRecientes" fx:id="menuRecientes" mnemonicParsing="false" text="Documentos recientes">
                            <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/nuevo.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                        <MenuItem id="itemAbrir" fx:id="itemAbrir" mnemonicParsing="false" onAction="#abrirArchivo" text="Abrir">
-                           <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/abrir.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                        <MenuItem id="itemGuardar" fx:id="itemGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar">
-                           <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/guardar%20.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                        <MenuItem id="itemGuardarComo" fx:id="itemGuardarComo" mnemonicParsing="false" onAction="#guardarComo" text="Guardar como">
-                           <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/guardar_como.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                        <MenuItem id="itemSalir" fx:id="itemSalir" mnemonicParsing="false" onAction="#salir" text="Salir">
-                           <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/salir.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                     </items>
-                  </Menu>
-                  <Menu id="menuEdicion" mnemonicParsing="false" text="Edición">
-                     <items>
-                        <MenuItem id="itemBuscar" fx:id="itemBuscar" mnemonicParsing="false" onAction="#buscarCoincidencias" text="Buscar">
-                           <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/buscar.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic></MenuItem>
-                        <MenuItem id="itemReemplazar" fx:id="itemReemplazar" mnemonicParsing="false" onAction="#reemplazar" text="Reemplazar">
-                           <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/reemplazar.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic></MenuItem>
-                     </items>
-                  </Menu>
-                  <Menu id="menuEstilo" fx:id="itemEstilo" mnemonicParsing="false" text="Estilo">
-                     <items>
-                        <MenuItem id="itemNegrita" fx:id="itemNegrita" mnemonicParsing="false" onAction="#estiloNegrita" text="negrita">
-                           <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/negrita.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                        <MenuItem id="itemCursiva" fx:id="itemCursiva" mnemonicParsing="false" onAction="#estiloCursiva" text="cursiva">
-                           <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/cursiva.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                     </items>
-                  </Menu>
-                  <Menu id="menuFormato" mnemonicParsing="false" text="Formato">
-                     <items>
-                        <Menu id="menuTexto" mnemonicParsing="false" text="Texto">
-                           <items>
-                              <MenuItem id="itemMay" fx:id="itemMay" mnemonicParsing="false" onAction="#textoMayusculas" text="MAYÚSCULAS">
-                                 <graphic>
-                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/mayusculas.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic></MenuItem>
-                              <MenuItem id="itemMin" fx:id="itemMin" mnemonicParsing="false" onAction="#textoMinusculas" text="minúsculas">
-                                 <graphic>
-                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/minusculas.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic></MenuItem>
-                           </items>
-                           <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/texto.png" />
-                                 </image>
-                              </ImageView>
+                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/reciente.png" />
+                                            </image>
+                                        </ImageView>
                            </graphic>
                         </Menu>
-                        <Menu id="menuFuente" mnemonicParsing="false" text="Fuente">
-                           <items>
-                              <MenuItem id="itemArial" fx:id="itemArial" mnemonicParsing="false" onAction="#cambiarFuenteArial" text="Arial" />
-                              <MenuItem id="itemCourier" fx:id="itemCourier" mnemonicParsing="false" onAction="#cambiarFuenteCourier" text="Courier" />
-                              <MenuItem id="itemVerdana" fx:id="itemVerdana" mnemonicParsing="false" onAction="#cambiarFuenteVerdana" text="Verdana" />
-                           </items>
-                           <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/tipografia%20(1).png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
+                                <MenuItem id="itemGuardar" fx:id="itemGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar">
+                                    <graphic>
+                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/guardar%20.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </MenuItem>
+                                <MenuItem id="itemGuardarComo" fx:id="itemGuardarComo" mnemonicParsing="false" onAction="#guardarComo" text="Guardar como">
+                                    <graphic>
+                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/guardar_como.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </MenuItem>
+                                <MenuItem id="itemSalir" fx:id="itemSalir" mnemonicParsing="false" onAction="#salir" text="Salir">
+                                    <graphic>
+                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/salir.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </MenuItem>
+                            </items>
                         </Menu>
-                        <Menu id="menuTamaño" mnemonicParsing="false" text="Tamaño">
-                           <items>
-                              <MenuItem id="itemTamDoce" fx:id="itemTamDoce" mnemonicParsing="false" onAction="#cambiarTamanio12" text="12" />
-                              <MenuItem id="itemTamDieciseis" fx:id="itemTamDieciseis" mnemonicParsing="false" onAction="#cambiarTamanio16" text="16" />
-                              <MenuItem id="itemTamDieciocho" fx:id="itemTamDieciocho" mnemonicParsing="false" onAction="#cambiarTamanio18" text="18" />
-                           </items>
+                        <Menu id="menuEdicion" mnemonicParsing="false" text="Edición">
+                            <items>
+                                <MenuItem id="itemBuscar" fx:id="itemBuscar" mnemonicParsing="false" onAction="#buscarCoincidencias" text="Buscar">
+                                    <graphic>
+                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/buscar.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </MenuItem>
+                                <MenuItem id="itemReemplazar" fx:id="itemReemplazar" mnemonicParsing="false" onAction="#reemplazar" text="Reemplazar">
+                                    <graphic>
+                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/reemplazar.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </MenuItem>
+                            </items>
                         </Menu>
-                     </items>
-                  </Menu>
-                  <Menu id="menuVer" mnemonicParsing="false" text="Ver">
-                     <items>
-                        <MenuItem id="itemBarraEstado" mnemonicParsing="false" text="Ocultar barra de estado" />
-                        <MenuItem id="itemBarraBotones" fx:id="itemBarraBotones" mnemonicParsing="false" onAction="#verUocultarBotones" text="Ver/Ocultar barra de botones" />
-                     </items>
-                  </Menu>
-                  <Menu id="menuAyuda" mnemonicParsing="false" text="Ayuda">
-                     <items>
-                        <MenuItem id="itemAcercaDe" mnemonicParsing="false" text="Acerca de..." />
-                     </items>
-                  </Menu>
-               </menus>
-            </MenuBar>
-            <MenuBar id="menuBotones" fx:id="menuBotones" prefHeight="47.0" prefWidth="600.0">
-              <menus>
-                <Menu mnemonicParsing="false">
-                     <graphic>
-                        <Button id="btnNuevo" fx:id="btnNuevo" mnemonicParsing="false" onAction="#nuevaVentana" prefHeight="25.0" prefWidth="30.0">
-                           <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/nuevo.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <tooltip>
-                              <Tooltip text="Nuevo" />
-                           </tooltip>
-                        </Button>
-                     </graphic>
-                </Menu>
-                  <Menu mnemonicParsing="false">
-                     <graphic>
-                        <Button id="btnAbrir" fx:id="btnAbrir" mnemonicParsing="false" onAction="#abrirArchivo" prefHeight="25.0" prefWidth="30.0">
-                           <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/abrir.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <tooltip>
-                              <Tooltip text="Abrir" />
-                           </tooltip>
-                        </Button>
-                     </graphic>
-                  </Menu>
-                  <Menu mnemonicParsing="false">
-                     <graphic>
-                        <MenuButton mnemonicParsing="false" prefHeight="32.0" prefWidth="48.0">
-                          <items>
-                            <MenuItem id="btnGuardar" fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar">
-                                 <graphic>
-                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/guardar%20.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </MenuItem>
-                            <MenuItem id="btnGuardarComo" fx:id="btnGuardarComo" mnemonicParsing="false" onAction="#guardarComo" text="Guardar como">
-                                 <graphic>
-                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/guardar_como.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </MenuItem>
-                          </items>
-                           <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/guardar%20_1.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuButton>
-                     </graphic>
-                  </Menu>
-              </menus>
-            </MenuBar>
-         </children>
-      </VBox>
-   </top>
-   <bottom>
-      <VBox id="contenedorBot" fx:id="contenedorBot" prefHeight="29.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <ToolBar id="toolBarBot" fx:id="toolBarBot" prefHeight="33.0" prefWidth="600.0">
-               <items>
-                  <ToolBar id="toolbarBuscar" fx:id="toolbarBuscar" prefHeight="25.0" prefWidth="211.0" visible="false">
-                     <items>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Siguiente" />
-                        <Button id="btnSiguiente" fx:id="btnSiguiente" mnemonicParsing="false" onAction="#buscarSiguiente" prefHeight="9.0" prefWidth="24.0">
-                           <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/siguiente.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <tooltip>
-                              <Tooltip text="Siguiente coincidencia" />
-                           </tooltip></Button>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Anterior" />
-                        <Button id="btnAnterior" fx:id="btnAnterior" mnemonicParsing="false" onAction="#buscarAnterior" prefHeight="12.0" prefWidth="22.0">
-                           <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/anterior.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <tooltip>
-                              <Tooltip text="Anterior coincidencia" />
-                           </tooltip></Button>
-                     </items>
-                  </ToolBar>
-               </items>
-            </ToolBar>
-         </children>
-      </VBox>
-   </bottom>
+                        <Menu id="menuEstilo" fx:id="itemEstilo" mnemonicParsing="false" text="Estilo">
+                            <items>
+                                <MenuItem id="itemNegrita" fx:id="itemNegrita" mnemonicParsing="false" onAction="#estiloNegrita" text="negrita">
+                                    <graphic>
+                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/negrita.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </MenuItem>
+                                <MenuItem id="itemCursiva" fx:id="itemCursiva" mnemonicParsing="false" onAction="#estiloCursiva" text="cursiva">
+                                    <graphic>
+                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/cursiva.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </MenuItem>
+                            </items>
+                        </Menu>
+                        <Menu id="menuFormato" mnemonicParsing="false" text="Formato">
+                            <items>
+                                <Menu id="menuTexto" mnemonicParsing="false" text="Texto">
+                                    <items>
+                                        <MenuItem id="itemMay" fx:id="itemMay" mnemonicParsing="false" onAction="#textoMayusculas" text="MAYÚSCULAS">
+                                            <graphic>
+                                                <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../img/mayusculas.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </MenuItem>
+                                        <MenuItem id="itemMin" fx:id="itemMin" mnemonicParsing="false" onAction="#textoMinusculas" text="minúsculas">
+                                            <graphic>
+                                                <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../img/minusculas.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </MenuItem>
+                                    </items>
+                                    <graphic>
+                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/texto.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Menu>
+                                <Menu id="menuFuente" mnemonicParsing="false" text="Fuente">
+                                    <items>
+                                        <MenuItem id="itemArial" fx:id="itemArial" mnemonicParsing="false" onAction="#cambiarFuenteArial" text="Arial" />
+                                        <MenuItem id="itemCourier" fx:id="itemCourier" mnemonicParsing="false" onAction="#cambiarFuenteCourier" text="Courier" />
+                                        <MenuItem id="itemVerdana" fx:id="itemVerdana" mnemonicParsing="false" onAction="#cambiarFuenteVerdana" text="Verdana" />
+                                    </items>
+                                    <graphic>
+                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/tipografia%20(1).png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Menu>
+                                <Menu id="menuTamaño" mnemonicParsing="false" text="Tamaño">
+                                    <items>
+                                        <MenuItem id="itemTamDoce" fx:id="itemTamDoce" mnemonicParsing="false" onAction="#cambiarTamanio12" text="12" />
+                                        <MenuItem id="itemTamDieciseis" fx:id="itemTamDieciseis" mnemonicParsing="false" onAction="#cambiarTamanio16" text="16" />
+                                        <MenuItem id="itemTamDieciocho" fx:id="itemTamDieciocho" mnemonicParsing="false" onAction="#cambiarTamanio18" text="18" />
+                                    </items>
+                                </Menu>
+                            </items>
+                        </Menu>
+                        <Menu id="menuVer" mnemonicParsing="false" text="Ver">
+                            <items>
+                                <MenuItem id="itemBarraEstado" mnemonicParsing="false" text="Ocultar barra de estado" />
+                                <MenuItem id="itemBarraBotones" fx:id="itemBarraBotones" mnemonicParsing="false" onAction="#verUocultarBotones" text="Ver/Ocultar barra de botones" />
+                            </items>
+                        </Menu>
+                        <Menu id="menuAyuda" mnemonicParsing="false" text="Ayuda">
+                            <items>
+                                <MenuItem id="itemAcercaDe" mnemonicParsing="false" text="Acerca de..." />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+                <MenuBar id="menuBotones" fx:id="menuBotones" prefHeight="47.0" prefWidth="600.0">
+                    <menus>
+                        <Menu mnemonicParsing="false">
+                            <graphic>
+                                <Button id="btnNuevo" fx:id="btnNuevo" mnemonicParsing="false" onAction="#nuevaVentana" prefHeight="25.0" prefWidth="30.0">
+                                    <graphic>
+                                        <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/nuevo.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <tooltip>
+                                        <Tooltip text="Nuevo" />
+                                    </tooltip>
+                                </Button>
+                            </graphic>
+                        </Menu>
+                        <Menu mnemonicParsing="false">
+                            <graphic>
+                                <Button id="btnAbrir" fx:id="btnAbrir" mnemonicParsing="false" onAction="#abrirArchivo" prefHeight="25.0" prefWidth="30.0">
+                                    <graphic>
+                                        <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/abrir.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <tooltip>
+                                        <Tooltip text="Abrir" />
+                                    </tooltip>
+                                </Button>
+                            </graphic>
+                        </Menu>
+                        <Menu mnemonicParsing="false">
+                            <graphic>
+                                <MenuButton mnemonicParsing="false" prefHeight="32.0" prefWidth="48.0">
+                                    <items>
+                                        <MenuItem id="btnGuardar" fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar">
+                                            <graphic>
+                                                <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../img/guardar%20.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </MenuItem>
+                                        <MenuItem id="btnGuardarComo" fx:id="btnGuardarComo" mnemonicParsing="false" onAction="#guardarComo" text="Guardar como">
+                                            <graphic>
+                                                <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../img/guardar_como.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </MenuItem>
+                                    </items>
+                                    <graphic>
+                                        <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/guardar%20_1.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </MenuButton>
+                            </graphic>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+            </children>
+        </VBox>
+    </top>
+    <bottom>
+        <VBox id="contenedorBot" fx:id="contenedorBot" prefHeight="29.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <ToolBar id="toolBarBot" fx:id="toolBarBot" prefHeight="33.0" prefWidth="600.0">
+                    <items>
+                        <ToolBar id="toolbarBuscar" fx:id="toolbarBuscar" prefHeight="13.0" prefWidth="211.0">
+                            <items>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Siguiente" />
+                                <Button id="btnSiguiente" fx:id="btnSiguiente" mnemonicParsing="false" onAction="#buscarSiguiente" prefHeight="9.0" prefWidth="24.0">
+                                    <graphic>
+                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/siguiente.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <tooltip>
+                                        <Tooltip text="Siguiente coincidencia" />
+                                    </tooltip>
+                                </Button>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Anterior" />
+                                <Button id="btnAnterior" fx:id="btnAnterior" mnemonicParsing="false" onAction="#buscarAnterior" prefHeight="12.0" prefWidth="22.0">
+                                    <graphic>
+                                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/anterior.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <tooltip>
+                                        <Tooltip text="Anterior coincidencia" />
+                                    </tooltip>
+                                </Button>
+                            </items>
+                        </ToolBar>
+                    </items>
+                </ToolBar>
+            </children>
+        </VBox>
+    </bottom>
 </BorderPane>

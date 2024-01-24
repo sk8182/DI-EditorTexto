@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -49,9 +51,18 @@ public class FXMLVistaController implements Initializable {
 
     //ITEMS ARCHIVO
     @FXML
+    private Menu menuArchivo;
+    
+    @FXML
     private MenuItem itemNuevo;
     @FXML
     private MenuItem itemAbrir;
+    @FXML
+    private Menu menuRecientes;
+
+    private List<File> archivosAbiertos = new ArrayList<>();
+    private int maxTamanoHistorial = 10; // Establece el tamaño máximo del historial
+
     @FXML
     private MenuItem itemGuardar;
     @FXML
@@ -74,6 +85,16 @@ public class FXMLVistaController implements Initializable {
     private MenuItem itemReemplazar;
     ////////////////////////////////////
 
+    //ITEMS Estilo
+    @FXML
+    private Menu itemEstilo;
+
+    @FXML
+    private MenuItem itemNegrita;
+    @FXML
+    private MenuItem itemCursiva;
+    ////////////////////////////////////
+
     //ITEMS FORMATO
     @FXML
     private MenuItem itemArial;
@@ -82,10 +103,6 @@ public class FXMLVistaController implements Initializable {
     @FXML
     private MenuItem itemVerdana;
 
-    @FXML
-    private MenuItem itemNegrita;
-    @FXML
-    private MenuItem itemCursiva;
     @FXML
     private MenuItem itemMay;
     @FXML
@@ -135,6 +152,7 @@ public class FXMLVistaController implements Initializable {
     private Button btnSiguiente;
     @FXML
     private Button btnAnterior;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -171,7 +189,7 @@ public class FXMLVistaController implements Initializable {
 
         // Muestra el diálogo y espera a que el usuario seleccione un archivo
         File archivoSeleccionado = fileChooser.showOpenDialog(new Stage());
-
+        agregarAlHistorial(archivoSeleccionado);
         if (archivoSeleccionado != null) {
             // Lee el contenido del archivo y lo carga en el TextArea
             try (BufferedReader br = new BufferedReader(new FileReader(archivoSeleccionado))) {
@@ -183,6 +201,8 @@ public class FXMLVistaController implements Initializable {
                 }
 
                 areaTexto.setText(contenido.toString());
+                mostrarHistorialArchivos();
+
             } catch (IOException e) {
                 e.printStackTrace();
 
@@ -191,6 +211,54 @@ public class FXMLVistaController implements Initializable {
         }
 
     }
+
+    private void agregarAlHistorial(File archivo) {
+        archivosAbiertos.remove(archivo); // Eliminar duplicados
+        archivosAbiertos.add(0, archivo); // Agregar al principio de la lista
+        if (archivosAbiertos.size() > maxTamanoHistorial) {
+            archivosAbiertos.remove(archivosAbiertos.size() - 1); // Eliminar elementos más antiguos
+        }
+        mostrarHistorialArchivos();
+    }
+
+    private List<File> obtenerHistorialArchivos() {
+        return new ArrayList<>(archivosAbiertos);
+    }
+
+    private void mostrarHistorialArchivos() {
+        
+    
+        // Limpia el menú de documentos recientes
+        menuRecientes.getItems().clear();
+
+        // Agrega los elementos del historial al menú de documentos recientes
+        for (File archivo : obtenerHistorialArchivos()) {
+            MenuItem menuItem = new MenuItem(archivo.getName());
+
+            // Asigna el EventHandler al hacer clic en el elemento del historial
+            menuItem.setOnAction(e -> cargarContenidoArchivo(archivo));
+
+            menuRecientes.getItems().add(menuItem);
+        }
+
+       
+    }
+    
+    private void cargarContenidoArchivo(File archivo) {
+    try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+        String linea;
+        StringBuilder contenido = new StringBuilder();
+
+        while ((linea = br.readLine()) != null) {
+            contenido.append(linea).append("\n");
+        }
+
+        areaTexto.setText(contenido.toString());
+        agregarAlHistorial(archivo); // Actualiza el historial al cargar un archivo
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 
     @FXML
     private void guardar(ActionEvent event) {
@@ -281,7 +349,7 @@ public class FXMLVistaController implements Initializable {
                 mostrarAlerta("Texto no encontrado", "El texto especificado no se encontró en el documento.");
             }
         });
-        toolbarBuscar.setVisible(true);
+
     }
 
     @FXML
