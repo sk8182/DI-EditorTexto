@@ -16,11 +16,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -28,13 +26,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.ToolBar;
-import javafx.scene.control.Tooltip;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -164,10 +158,10 @@ public class FXMLVistaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Agregar un listener al contenido del TextArea para detectar cambios
-    areaTexto.textProperty().addListener((observable, oldValue, newValue) -> {
-        // Actualizar la barra de estado cuando el contenido cambia
-        actualizarBarraDeEstado();
-    });
+        areaTexto.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Actualizar la barra de estado cuando el contenido cambia
+            actualizarBarraDeEstado();
+        });
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -274,8 +268,11 @@ public class FXMLVistaController implements Initializable {
     @FXML
     private void guardar(ActionEvent event) {
 
-        // Si es la primera vez que se guarda, o si el archivo guardado anteriormente ha sido eliminado o cambiado de ubicación
-        if (archivoGuardado == null || !archivoGuardado.exists()) {
+        // Si hay un archivo abierto, guardar en ese archivo directamente
+        if (archivoSeleccionado != null) {
+            guardarEnArchivo(archivoSeleccionado);
+        } else {
+            // Si no hay archivo abierto, muestra el cuadro de diálogo para seleccionar la ubicación
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Guardar Archivo de Texto");
 
@@ -284,22 +281,53 @@ public class FXMLVistaController implements Initializable {
             fileChooser.getExtensionFilters().add(extFilter);
 
             // Muestra el diálogo y espera a que el usuario seleccione la ubicación y el nombre del archivo
-            archivoGuardado = fileChooser.showSaveDialog(new Stage());
-        }
+            File archivoGuardado = fileChooser.showSaveDialog(new Stage());
 
-        if (archivoGuardado != null) {
-            // Guarda el contenido del TextArea en el archivo seleccionado
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoGuardado))) {
-                writer.write(areaTexto.getText());
-            } catch (IOException e) {
-                e.printStackTrace();
-                // Manejo de errores al guardar el archivo
+            if (archivoGuardado != null) {
+                // Guarda el contenido del TextArea en el archivo seleccionado
+                guardarEnArchivo(archivoGuardado);
             }
         }
     }
 
-    @FXML
-    private void guardarComo(ActionEvent event) {
+    private void guardarEnArchivo(File archivo) {
+        // Guarda el contenido del TextArea en el archivo seleccionado
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo))) {
+            writer.write(areaTexto.getText());
+            archivoSeleccionado = archivo; // Actualiza el archivo abierto
+            archivoGuardado = archivo; // Actualiza el archivo guardado
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Manejo de errores al guardar el archivo
+        }
+    
+
+//        // Si es la primera vez que se guarda, o si el archivo guardado anteriormente ha sido eliminado o cambiado de ubicación
+//        if (archivoGuardado == null || !archivoGuardado.exists()) {
+//            FileChooser fileChooser = new FileChooser();
+//            fileChooser.setTitle("Guardar Archivo de Texto");
+//
+//            // Establece el filtro para mostrar solo archivos de texto
+//            ExtensionFilter extFilter = new ExtensionFilter("Archivos de Texto (*.txt)", "*.txt");
+//            fileChooser.getExtensionFilters().add(extFilter);
+//
+//            // Muestra el diálogo y espera a que el usuario seleccione la ubicación y el nombre del archivo
+//            archivoGuardado = fileChooser.showSaveDialog(new Stage());
+//        }
+//
+//        if (archivoGuardado != null) {
+//            // Guarda el contenido del TextArea en el archivo seleccionado
+//            try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoGuardado))) {
+//                writer.write(areaTexto.getText());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                // Manejo de errores al guardar el archivo
+//            }
+//        }
+}
+
+@FXML
+private void guardarComo(ActionEvent event) {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Guardar Archivo de Texto");
@@ -324,7 +352,7 @@ public class FXMLVistaController implements Initializable {
     }
 
     @FXML
-    private void salir(ActionEvent event) {
+private void salir(ActionEvent event) {
 
         Platform.exit();// Método preferido para cerrar una aplicación JavaFX
 
@@ -335,7 +363,7 @@ public class FXMLVistaController implements Initializable {
     /////////////////////////////////////////////////////////////////////
     ///////////////////////FUNCIONES PARA EL MENU EDICIóN
     @FXML
-    private void buscarCoincidencias(ActionEvent event) {
+private void buscarCoincidencias(ActionEvent event) {
 
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Buscar Coincidencias");
@@ -364,7 +392,7 @@ public class FXMLVistaController implements Initializable {
     }
 
     @FXML
-    private void buscarSiguiente(ActionEvent event) {
+private void buscarSiguiente(ActionEvent event) {
 
         if (!indiceCoincidencias.isEmpty() && indiceActual < indiceCoincidencias.size() - 1) {
             indiceActual++;
@@ -374,7 +402,7 @@ public class FXMLVistaController implements Initializable {
     }
 
     @FXML
-    private void buscarAnterior(ActionEvent event) {
+private void buscarAnterior(ActionEvent event) {
 
         if (!indiceCoincidencias.isEmpty() && indiceActual > 0) {
             indiceActual--;
@@ -389,7 +417,7 @@ public class FXMLVistaController implements Initializable {
     }
 
     @FXML
-    private void reemplazar(ActionEvent event) {
+private void reemplazar(ActionEvent event) {
         TextInputDialog dialogBuscar = new TextInputDialog();
         dialogBuscar.setTitle("Reemplazar");
         dialogBuscar.setHeaderText("Ingrese el texto a buscar:");
@@ -426,7 +454,7 @@ public class FXMLVistaController implements Initializable {
     /////////////////////////////////////////////////////////////////////
     ///////////////////////FUNCIONES PARA EL MENU FORMATO
     @FXML
-    private void estiloNegrita(ActionEvent event) {
+private void estiloNegrita(ActionEvent event) {
 
         String estiloActual = areaTexto.getStyle();
         areaTexto.setStyle(estiloActual + "-fx-font-weight: bold;");
@@ -434,7 +462,7 @@ public class FXMLVistaController implements Initializable {
     }
 
     @FXML
-    private void estiloCursiva(ActionEvent event) {
+private void estiloCursiva(ActionEvent event) {
 
         String estiloActual = areaTexto.getStyle();
         areaTexto.setStyle(estiloActual + "-fx-font-weight: normal; -fx-font-style: italic;");
@@ -442,7 +470,7 @@ public class FXMLVistaController implements Initializable {
     }
 
     @FXML
-    private void textoMayusculas(ActionEvent event) {
+private void textoMayusculas(ActionEvent event) {
 
         String selecTexto = areaTexto.getSelectedText();
 
@@ -455,7 +483,7 @@ public class FXMLVistaController implements Initializable {
     }
 
     @FXML
-    private void textoMinusculas(ActionEvent event) {
+private void textoMinusculas(ActionEvent event) {
 
 //        String textoActual = areaTexto.getText();
 //        areaTexto.setText(textoActual.toLowerCase());
@@ -470,38 +498,38 @@ public class FXMLVistaController implements Initializable {
     }
 
     @FXML
-    private void cambiarFuenteArial(ActionEvent event) {
+private void cambiarFuenteArial(ActionEvent event) {
 
         areaTexto.setStyle("-fx-font-family: Arial;");
 
     }
 
     @FXML
-    private void cambiarFuenteCourier(ActionEvent event) {
+private void cambiarFuenteCourier(ActionEvent event) {
 
         areaTexto.setStyle("-fx-font-family: Courier New;");
 
     }
 
     @FXML
-    private void cambiarFuenteVerdana(ActionEvent event) {
+private void cambiarFuenteVerdana(ActionEvent event) {
 
         areaTexto.setStyle("-fx-font-family: Verdana;");
 
     }
 
     @FXML
-    private void cambiarTamanio12(ActionEvent event) {
+private void cambiarTamanio12(ActionEvent event) {
         cambiarTamanioTexto(12);
     }
 
     @FXML
-    private void cambiarTamanio16(ActionEvent event) {
+private void cambiarTamanio16(ActionEvent event) {
         cambiarTamanioTexto(16);
     }
 
     @FXML
-    private void cambiarTamanio18(ActionEvent event) {
+private void cambiarTamanio18(ActionEvent event) {
         cambiarTamanioTexto(18);
     }
 
@@ -514,7 +542,7 @@ public class FXMLVistaController implements Initializable {
     /////////////////////////////////////////////////////////////////////
     ///////////////////////FUNCIONES PARA EL MENU VER
     @FXML
-    private void verUocultarBotones(ActionEvent event) {
+private void verUocultarBotones(ActionEvent event) {
 
         if (menuBotones.isVisible()) {
 
@@ -528,7 +556,7 @@ public class FXMLVistaController implements Initializable {
     }
     
     @FXML
-    private void verUocultarBarraEstado(ActionEvent event) {
+private void verUocultarBarraEstado(ActionEvent event) {
         
          if (contenedorBot.isVisible()) {
 
