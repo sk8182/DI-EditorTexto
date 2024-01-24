@@ -23,6 +23,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -109,6 +110,8 @@ public class FXMLVistaController implements Initializable {
     @FXML
     private MenuItem itemTamDoce;
     @FXML
+    private MenuItem itemTamCatorce;
+    @FXML
     private MenuItem itemTamDieciseis;
     @FXML
     private MenuItem itemTamDieciocho;
@@ -131,6 +134,11 @@ public class FXMLVistaController implements Initializable {
     private MenuItem btnGuardar;
     @FXML
     private MenuItem btnGuardarComo;
+    @FXML
+    private ComboBox<String> comboBoxFuente;
+    @FXML
+    private ComboBox<String> comboBoxTamano;
+
 
     //AREA TEXTO
     @FXML
@@ -154,14 +162,25 @@ public class FXMLVistaController implements Initializable {
     private Label labelCodific;
     @FXML
     private MenuItem itemBarraEstado;
-
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        comboBoxFuente.setValue("Arial");
+
+        comboBoxFuente.getItems().addAll("Arial", "Courier", "Verdana");
+        
+        comboBoxTamano.setValue("12");
+        
+        comboBoxTamano.getItems().addAll("12","14","16","18");
+
         // Agregar un listener al contenido del TextArea para detectar cambios
         areaTexto.textProperty().addListener((observable, oldValue, newValue) -> {
             // Actualizar la barra de estado cuando el contenido cambia
             actualizarBarraDeEstado();
         });
+
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -300,34 +319,11 @@ public class FXMLVistaController implements Initializable {
             e.printStackTrace();
             // Manejo de errores al guardar el archivo
         }
-    
 
-//        // Si es la primera vez que se guarda, o si el archivo guardado anteriormente ha sido eliminado o cambiado de ubicación
-//        if (archivoGuardado == null || !archivoGuardado.exists()) {
-//            FileChooser fileChooser = new FileChooser();
-//            fileChooser.setTitle("Guardar Archivo de Texto");
-//
-//            // Establece el filtro para mostrar solo archivos de texto
-//            ExtensionFilter extFilter = new ExtensionFilter("Archivos de Texto (*.txt)", "*.txt");
-//            fileChooser.getExtensionFilters().add(extFilter);
-//
-//            // Muestra el diálogo y espera a que el usuario seleccione la ubicación y el nombre del archivo
-//            archivoGuardado = fileChooser.showSaveDialog(new Stage());
-//        }
-//
-//        if (archivoGuardado != null) {
-//            // Guarda el contenido del TextArea en el archivo seleccionado
-//            try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoGuardado))) {
-//                writer.write(areaTexto.getText());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                // Manejo de errores al guardar el archivo
-//            }
-//        }
-}
+    }
 
-@FXML
-private void guardarComo(ActionEvent event) {
+    @FXML
+    private void guardarComo(ActionEvent event) {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Guardar Archivo de Texto");
@@ -352,7 +348,7 @@ private void guardarComo(ActionEvent event) {
     }
 
     @FXML
-private void salir(ActionEvent event) {
+    private void salir(ActionEvent event) {
 
         Platform.exit();// Método preferido para cerrar una aplicación JavaFX
 
@@ -363,7 +359,7 @@ private void salir(ActionEvent event) {
     /////////////////////////////////////////////////////////////////////
     ///////////////////////FUNCIONES PARA EL MENU EDICIóN
     @FXML
-private void buscarCoincidencias(ActionEvent event) {
+    private void buscarCoincidencias(ActionEvent event) {
 
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Buscar Coincidencias");
@@ -392,7 +388,7 @@ private void buscarCoincidencias(ActionEvent event) {
     }
 
     @FXML
-private void buscarSiguiente(ActionEvent event) {
+    private void buscarSiguiente(ActionEvent event) {
 
         if (!indiceCoincidencias.isEmpty() && indiceActual < indiceCoincidencias.size() - 1) {
             indiceActual++;
@@ -402,7 +398,7 @@ private void buscarSiguiente(ActionEvent event) {
     }
 
     @FXML
-private void buscarAnterior(ActionEvent event) {
+    private void buscarAnterior(ActionEvent event) {
 
         if (!indiceCoincidencias.isEmpty() && indiceActual > 0) {
             indiceActual--;
@@ -417,7 +413,7 @@ private void buscarAnterior(ActionEvent event) {
     }
 
     @FXML
-private void reemplazar(ActionEvent event) {
+    private void reemplazar(ActionEvent event) {
         TextInputDialog dialogBuscar = new TextInputDialog();
         dialogBuscar.setTitle("Reemplazar");
         dialogBuscar.setHeaderText("Ingrese el texto a buscar:");
@@ -449,12 +445,10 @@ private void reemplazar(ActionEvent event) {
 
     ///////////////FIN FUNCIONES MENU EDICIóN//////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
-    
-    
     /////////////////////////////////////////////////////////////////////
     ///////////////////////FUNCIONES PARA EL MENU FORMATO
     @FXML
-private void estiloNegrita(ActionEvent event) {
+    private void estiloNegrita(ActionEvent event) {
 
         String estiloActual = areaTexto.getStyle();
         areaTexto.setStyle(estiloActual + "-fx-font-weight: bold;");
@@ -462,7 +456,7 @@ private void estiloNegrita(ActionEvent event) {
     }
 
     @FXML
-private void estiloCursiva(ActionEvent event) {
+    private void estiloCursiva(ActionEvent event) {
 
         String estiloActual = areaTexto.getStyle();
         areaTexto.setStyle(estiloActual + "-fx-font-weight: normal; -fx-font-style: italic;");
@@ -470,7 +464,7 @@ private void estiloCursiva(ActionEvent event) {
     }
 
     @FXML
-private void textoMayusculas(ActionEvent event) {
+    private void textoMayusculas(ActionEvent event) {
 
         String selecTexto = areaTexto.getSelectedText();
 
@@ -483,7 +477,7 @@ private void textoMayusculas(ActionEvent event) {
     }
 
     @FXML
-private void textoMinusculas(ActionEvent event) {
+    private void textoMinusculas(ActionEvent event) {
 
 //        String textoActual = areaTexto.getText();
 //        areaTexto.setText(textoActual.toLowerCase());
@@ -498,43 +492,71 @@ private void textoMinusculas(ActionEvent event) {
     }
 
     @FXML
-private void cambiarFuenteArial(ActionEvent event) {
+    private void cambiarFuenteArial(ActionEvent event) {
+        cambiarFuente(event);
 
-        areaTexto.setStyle("-fx-font-family: Arial;");
+        //areaTexto.setStyle("-fx-font-family: Arial;");
+    }
+
+    @FXML
+    private void cambiarFuenteCourier(ActionEvent event) {
+        cambiarFuente(event);
 
     }
 
     @FXML
-private void cambiarFuenteCourier(ActionEvent event) {
-
-        areaTexto.setStyle("-fx-font-family: Courier New;");
-
-    }
-
-    @FXML
-private void cambiarFuenteVerdana(ActionEvent event) {
-
-        areaTexto.setStyle("-fx-font-family: Verdana;");
+    private void cambiarFuenteVerdana(ActionEvent event) {
+        cambiarFuente(event);
 
     }
 
     @FXML
-private void cambiarTamanio12(ActionEvent event) {
+    private void cambiarFuenteCombo(){
+        // Agregar un listener al ComboBox para manejar el cambio de selección
+        comboBoxFuente.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                areaTexto.setStyle("-fx-font-family: " + newValue + ";");
+            }
+        });
+    }
+    private void cambiarFuente(ActionEvent event) {
+        MenuItem menuItem = (MenuItem) event.getSource(); // Obtén el MenuItem que desencadenó el evento
+        String fuente = menuItem.getText(); // Obtiene el texto del MenuItem, que debería ser el nombre de la fuente
+        areaTexto.setStyle("-fx-font-family: " + fuente + ";");
+    }
+
+    @FXML
+    private void cambiarTamanio12(ActionEvent event) {
         cambiarTamanioTexto(12);
     }
+    
+    @FXML
+    private void cambiarTamanio14(ActionEvent event) {
+        cambiarTamanioTexto(14);
+    }
 
     @FXML
-private void cambiarTamanio16(ActionEvent event) {
+    private void cambiarTamanio16(ActionEvent event) {
         cambiarTamanioTexto(16);
     }
 
     @FXML
-private void cambiarTamanio18(ActionEvent event) {
+    private void cambiarTamanio18(ActionEvent event) {
         cambiarTamanioTexto(18);
     }
 
     private void cambiarTamanioTexto(int tamanio) {
         areaTexto.setStyle("-fx-font-size: " + tamanio + "px;");
+    }
+    
+    @FXML
+    private void cambiarTamanoCombo(){
+        // Agregar un listener al ComboBox para manejar el cambio de selección
+        comboBoxTamano.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                areaTexto.setStyle("-fx-font-size: " + newValue + "px;");
+            }
+        });
     }
     ///////////////FIN FUNCIONES MENU FORMATO//////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -542,7 +564,7 @@ private void cambiarTamanio18(ActionEvent event) {
     /////////////////////////////////////////////////////////////////////
     ///////////////////////FUNCIONES PARA EL MENU VER
     @FXML
-private void verUocultarBotones(ActionEvent event) {
+    private void verUocultarBotones(ActionEvent event) {
 
         if (menuBotones.isVisible()) {
 
@@ -554,11 +576,11 @@ private void verUocultarBotones(ActionEvent event) {
 
         }
     }
-    
+
     @FXML
-private void verUocultarBarraEstado(ActionEvent event) {
-        
-         if (contenedorBot.isVisible()) {
+    private void verUocultarBarraEstado(ActionEvent event) {
+
+        if (contenedorBot.isVisible()) {
 
             contenedorBot.setVisible(false);
 
@@ -567,12 +589,11 @@ private void verUocultarBarraEstado(ActionEvent event) {
             contenedorBot.setVisible(true);
 
         }
-         
+
     }
 
     ///////////////FIN FUNCIONES MENU VER//////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
-    
     /////////////////////////////////////////////////////////////////////////////////////////
     ////////////////FUNCIONES BARRA ESTADO/////////////////////////////////////////////////
     private void actualizarBarraDeEstado() {
@@ -618,16 +639,15 @@ private void verUocultarBarraEstado(ActionEvent event) {
     }
 
     private String obtenerCodificacion() {
-    if (archivoSeleccionado != null) {
-        // Si hay un archivo asociado, utiliza la lógica anterior
-        return obtenerCodificacionArchivo(archivoSeleccionado);
-    } else {
-        // Si no hay archivo asociado, asume que el texto en el TextArea está codificado en UTF-16
-        return "UTF-16";
+        if (archivoSeleccionado != null) {
+            // Si hay un archivo asociado, utiliza la lógica anterior
+            return obtenerCodificacionArchivo(archivoSeleccionado);
+        } else {
+            // Si no hay archivo asociado, asume que el texto en el TextArea está codificado en UTF-16
+            return "UTF-16";
+        }
     }
-}
-    
-    
+
     private String obtenerCodificacionArchivo(File archivo) {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(archivo), Charset.defaultCharset()))) {
             br.mark(4096); // Marcar el inicio del flujo para volver a él si es necesario
@@ -650,4 +670,6 @@ private void verUocultarBarraEstado(ActionEvent event) {
 
     ///////////////////////////FIN FUNCIONES BARRA ESTADO//////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
+
+    
 }

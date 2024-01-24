@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.sun.javafx.charts.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
@@ -172,9 +173,17 @@
                                 <Menu id="menuTamaño" mnemonicParsing="false" text="Tamaño">
                                     <items>
                                         <MenuItem id="itemTamDoce" fx:id="itemTamDoce" mnemonicParsing="false" onAction="#cambiarTamanio12" text="12" />
+                              <MenuItem fx:id="itemTamCatorce" mnemonicParsing="false" onAction="#cambiarTamanio14" text="14" />
                                         <MenuItem id="itemTamDieciseis" fx:id="itemTamDieciseis" mnemonicParsing="false" onAction="#cambiarTamanio16" text="16" />
                                         <MenuItem id="itemTamDieciocho" fx:id="itemTamDieciocho" mnemonicParsing="false" onAction="#cambiarTamanio18" text="18" />
                                     </items>
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/tamano.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                                 </Menu>
                             </items>
                         </Menu>
@@ -258,6 +267,15 @@
                                 </MenuButton>
                             </graphic>
                         </Menu>
+                  <Menu mnemonicParsing="false">
+                     <graphic>
+                        <ComboBox fx:id="comboBoxFuente" onAction="#cambiarFuenteCombo" prefHeight="32.0" prefWidth="150.0" />
+                     </graphic>
+                  </Menu>
+                  <Menu mnemonicParsing="false">
+                     <graphic>
+                        <ComboBox fx:id="comboBoxTamano" onAction="#cambiarTamanoCombo" prefHeight="39.0" prefWidth="150.0" />
+                     </graphic></Menu>
                     </menus>
                 </MenuBar>
             </children>
