@@ -17,7 +17,7 @@ public class EditorTexto extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLVista.fxml"));
         
         Scene scene = new Scene(root);
-        
+        stage.setTitle("TextEdit");
         stage.setScene(scene);
         stage.show();
     }

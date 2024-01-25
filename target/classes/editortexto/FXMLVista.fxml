@@ -195,7 +195,7 @@
                         </Menu>
                         <Menu id="menuAyuda" mnemonicParsing="false" text="Ayuda">
                             <items>
-                                <MenuItem id="itemAcercaDe" mnemonicParsing="false" text="Acerca de..." />
+                                <MenuItem id="itemAcercaDe" fx:id="itemAcercaDe" mnemonicParsing="false" onAction="#abrirAcercaDe" text="Acerca de..." />
                             </items>
                         </Menu>
                     </menus>
@@ -296,7 +296,7 @@
             <children>
             <HBox prefHeight="39.0" prefWidth="600.0">
                <children>
-                  <Label id="labelSiguiente" fx:id="labelCursor" contentDisplay="CENTER" text="Siguiente">
+                  <Label id="labelSiguiente" fx:id="labelCursor" contentDisplay="CENTER" text="Anterior">
                      <padding>
                         <Insets left="10.0" right="5.0" top="2.0" />
                      </padding>
@@ -316,7 +316,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                           </Button>
-                  <Label id="labelAnterior" contentDisplay="CENTER" text="Anterior">
+                  <Label id="labelAnterior" contentDisplay="CENTER" text="Siguiente">
                      <padding>
                         <Insets right="5.0" top="2.0" />
                      </padding>

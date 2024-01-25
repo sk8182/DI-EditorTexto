@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="editortexto.FXMLVistaControllerAcerca">
+   <children>
+      <ImageView fitHeight="230.0" fitWidth="145.0" layoutX="51.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/acercade.jpg" />
+         </image>
+      </ImageView>
+      <Text layoutX="260.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TextEdit " wrappingWidth="145.0">
+         <font>
+            <Font name="Calibri" size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="260.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TextEdit es un proyecto, creado por Julio Martínez Cazorla, como parte de una tarea de la asignatura DI." wrappingWidth="282.13671875" />
+      <Text layoutX="260.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Versión: 1.0" />
+   </children>
+</AnchorPane>
