@@ -204,6 +204,7 @@ public class FXMLVistaController implements Initializable {
     private void nuevaVentana(ActionEvent event) {
 
         try {
+   
             Parent root = FXMLLoader.load(getClass().getResource("FXMLVista.fxml"));
 
             Stage nuevaVentanaStage = new Stage();
@@ -230,10 +231,10 @@ public class FXMLVistaController implements Initializable {
         // Establece el filtro para mostrar archivos 
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Archivos de Texto (*.txt, *.csv, *.log)", "*.txt", "*.csv", "*.log");
         fileChooser.getExtensionFilters().add(extFilter);
-
+        
         // Muestra el diálogo y espera a que el usuario seleccione un archivo
         archivoSeleccionado = fileChooser.showOpenDialog(new Stage());
-
+        
         agregarAlHistorial(archivoSeleccionado);
 
         if (archivoSeleccionado != null) {
@@ -364,6 +365,7 @@ public class FXMLVistaController implements Initializable {
     * @param archivo El archivo en el que se guardará el contenido del área de texto.
     */
     private void guardarEnArchivo(File archivo) {
+        
         // Guarda el contenido del TextArea en el archivo seleccionado
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo))) {
             writer.write(areaTexto.getText());

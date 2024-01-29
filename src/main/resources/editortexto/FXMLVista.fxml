@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.input.*?>
 <?import com.sun.javafx.charts.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
@@ -33,6 +34,9 @@
                                             </image>
                                         </ImageView>
                                     </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="U" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
                                 </MenuItem>
                                 <MenuItem id="itemAbrir" fx:id="itemAbrir" mnemonicParsing="false" onAction="#abrirArchivo" text="Abrir">
                                     <graphic>
@@ -42,6 +46,9 @@
                                             </image>
                                         </ImageView>
                                     </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
                                 </MenuItem>
                         <Menu id="menuRecientes" fx:id="menuRecientes" mnemonicParsing="false" text="Documentos recientes">
                            <graphic>
@@ -60,6 +67,9 @@
                                             </image>
                                         </ImageView>
                                     </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
                                 </MenuItem>
                                 <MenuItem id="itemGuardarComo" fx:id="itemGuardarComo" mnemonicParsing="false" onAction="#guardarComo" text="Guardar como">
                                     <graphic>
@@ -69,6 +79,9 @@
                                             </image>
                                         </ImageView>
                                     </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="ANY" shortcut="UP" />
+                           </accelerator>
                                 </MenuItem>
                                 <MenuItem id="itemSalir" fx:id="itemSalir" mnemonicParsing="false" onAction="#salir" text="Salir">
                                     <graphic>
@@ -78,6 +91,9 @@
                                             </image>
                                         </ImageView>
                                     </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
                                 </MenuItem>
                             </items>
                         </Menu>
@@ -91,6 +107,9 @@
                                             </image>
                                         </ImageView>
                                     </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="B" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
                                 </MenuItem>
                                 <MenuItem id="itemReemplazar" fx:id="itemReemplazar" mnemonicParsing="false" onAction="#reemplazar" text="Reemplazar">
                                     <graphic>
@@ -100,6 +119,9 @@
                                             </image>
                                         </ImageView>
                                     </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
                                 </MenuItem>
                             </items>
                         </Menu>
@@ -113,6 +135,9 @@
                                             </image>
                                         </ImageView>
                                     </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
                                 </MenuItem>
                                 <MenuItem id="itemCursiva" fx:id="itemCursiva" mnemonicParsing="false" onAction="#estiloCursiva" text="cursiva">
                                     <graphic>
@@ -122,6 +147,9 @@
                                             </image>
                                         </ImageView>
                                     </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
                                 </MenuItem>
                             </items>
                         </Menu>
@@ -213,7 +241,7 @@
                                         </ImageView>
                                     </graphic>
                                     <tooltip>
-                                        <Tooltip text="Nuevo" />
+                                        <Tooltip text="Nuevo (Ctrl+U)" />
                                     </tooltip>
                                 </Button>
                             </graphic>
@@ -229,7 +257,7 @@
                                         </ImageView>
                                     </graphic>
                                     <tooltip>
-                                        <Tooltip text="Abrir" />
+                                        <Tooltip text="Abrir (Ctrl+O)" />
                                     </tooltip>
                                 </Button>
                             </graphic>
@@ -265,7 +293,7 @@
                                         </ImageView>
                                     </graphic>
                            <tooltip>
-                              <Tooltip text="Guardar" />
+                              <Tooltip text="Guardar (Ctrl+G)" />
                            </tooltip>
                                 </MenuButton>
                             </graphic>
