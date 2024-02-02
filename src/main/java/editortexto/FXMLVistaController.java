@@ -1,15 +1,8 @@
 package editortexto;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,24 +28,25 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import modelo.EditorModelo;
 
 /**
- * Controlador para la interfaz gráfica de usuario del editor de texto.
- * Utiliza JavaFX para la construcción y gestión de la GUI.
+ * Controlador para la interfaz gráfica de usuario del editor de texto. Utiliza
+ * JavaFX para la construcción y gestión de la GUI.
  *
  * @author julio
  */
 public class FXMLVistaController implements Initializable {
+
+    private EditorModelo modelo = new EditorModelo();
     
-    
-   
     @FXML
     private VBox contenedorTop;
-    
+
     //MENU TOP
     @FXML
     private MenuBar menuTop;
-    
+
     //MENU ARCHIVO
     @FXML
     private Menu menuArchivo;
@@ -60,37 +54,30 @@ public class FXMLVistaController implements Initializable {
     private MenuItem itemNuevo;
     @FXML
     private MenuItem itemAbrir;
-    
+
     private File archivoSeleccionado;  // Declaración de la variable
-    
+
     @FXML
     private Menu menuRecientes;
 
-    private List<File> archivosAbiertos = new ArrayList<>();
-    
-    private int maxTamanoHistorial = 10; // Establece el tamaño máximo del historial
-    
     @FXML
     private MenuItem itemGuardar;
-    
-    private File archivoGuardado;  // Mantiene una referencia al archivo guardado
-    
+
     @FXML
     private MenuItem itemGuardarComo;
     @FXML
     private MenuItem itemSalir;
-    
-    
+
     //MENU EDICION
     @FXML
     private MenuItem itemBuscar;
     @FXML
     private MenuItem itemReemplazar;
-    
+
     private List<Integer> indiceCoincidencias = new ArrayList<>();
     private String textoABuscar;
     private int indiceActual = -1;
-    
+
     //MENU ESTILO
     @FXML
     private Menu itemEstilo;
@@ -98,7 +85,7 @@ public class FXMLVistaController implements Initializable {
     private MenuItem itemNegrita;
     @FXML
     private MenuItem itemCursiva;
-    
+
     //MENU FORMATO
     @FXML
     private MenuItem itemMay;
@@ -118,17 +105,17 @@ public class FXMLVistaController implements Initializable {
     private MenuItem itemTamDieciseis;
     @FXML
     private MenuItem itemTamDieciocho;
-    
+
     //MENU VER
     @FXML
     private MenuItem itemBarraEstado;
     @FXML
     private MenuItem itemBarraBotones;
-    
+
     //MENU AYUDA
     @FXML
     private MenuItem itemAcercaDe;
-    
+
     //EMPIEZA EL MENU BOTONES
     @FXML
     private MenuBar menuBotones;
@@ -139,7 +126,7 @@ public class FXMLVistaController implements Initializable {
     @FXML
     private MenuItem btnGuardar;
     @FXML
-    private MenuItem btnGuardarComo;    
+    private MenuItem btnGuardarComo;
     @FXML
     private ComboBox<String> comboBoxFuente;
     @FXML
@@ -165,13 +152,13 @@ public class FXMLVistaController implements Initializable {
     private Label labelCuentaLineas;
     @FXML
     private Label labelCodific;
-    
-    
+
     /**
      * Inicializa la interfaz de usuario y configura los elementos iniciales.
      *
-     * @param url       La ubicación relativa de la raíz del objeto a inicializar.
-     * @param rb        El objeto ResourceBundle que contiene los recursos específicos del local.
+     * @param url La ubicación relativa de la raíz del objeto a inicializar.
+     * @param rb El objeto ResourceBundle que contiene los recursos específicos
+     * del local.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -194,7 +181,6 @@ public class FXMLVistaController implements Initializable {
 
     /////////////////////////////////////////////////////////////////////
     ///////////////////////FUNCIONES PARA EL MENU ARCHIVO
-    
     /**
      * Abre una nueva ventana del editor de texto.
      *
@@ -204,7 +190,7 @@ public class FXMLVistaController implements Initializable {
     private void nuevaVentana(ActionEvent event) {
 
         try {
-   
+
             Parent root = FXMLLoader.load(getClass().getResource("FXMLVista.fxml"));
 
             Stage nuevaVentanaStage = new Stage();
@@ -213,7 +199,7 @@ public class FXMLVistaController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
     }
 
@@ -231,28 +217,19 @@ public class FXMLVistaController implements Initializable {
         // Establece el filtro para mostrar archivos 
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Archivos de Texto (*.txt, *.csv, *.log)", "*.txt", "*.csv", "*.log");
         fileChooser.getExtensionFilters().add(extFilter);
-        
+
         // Muestra el diálogo y espera a que el usuario seleccione un archivo
         archivoSeleccionado = fileChooser.showOpenDialog(new Stage());
-        
-        agregarAlHistorial(archivoSeleccionado);
 
+        //agregarAlHistorial(archivoSeleccionado);
         if (archivoSeleccionado != null) {
-            // Lee el contenido del archivo y lo carga en el TextArea
-            try (BufferedReader br = new BufferedReader(new FileReader(archivoSeleccionado))) {
-                String linea;
-                StringBuilder contenido = new StringBuilder();
-
-                while ((linea = br.readLine()) != null) {
-                    contenido.append(linea).append("\n");
-                }
-
-                areaTexto.setText(contenido.toString());
+            try {
+                String contenido = modelo.leerArchivo(archivoSeleccionado);
+                areaTexto.setText(contenido);
+                modelo.agregarAlHistorial(archivoSeleccionado);
                 mostrarHistorialArchivos();
-
             } catch (IOException e) {
                 e.printStackTrace();
-
             }
 
         }
@@ -260,42 +237,18 @@ public class FXMLVistaController implements Initializable {
     }
 
     /**
-    * Agrega un archivo al historial de archivos abiertos. Elimina duplicados,
-    * agrega al principio de la lista y mantiene el historial dentro del límite
-    * establecido por {@code maxTamanoHistorial}.
-    *
-    * @param archivo El archivo a agregar al historial.
-    */
-    private void agregarAlHistorial(File archivo) {
-        archivosAbiertos.remove(archivo); // Eliminar duplicados
-        archivosAbiertos.add(0, archivo); // Agregar al principio de la lista
-        if (archivosAbiertos.size() > maxTamanoHistorial) {
-            archivosAbiertos.remove(archivosAbiertos.size() - 1); // Eliminar elementos más antiguos
-        }
-        mostrarHistorialArchivos();
-    }
-
-    /**
-    * Obtiene una copia de la lista actual del historial de archivos abiertos.
-    *
-    * @return Una nueva lista que representa el historial de archivos abiertos.
-    */
-    private List<File> obtenerHistorialArchivos() {
-        return new ArrayList<>(archivosAbiertos);
-    }
-
-    /**
-    * Muestra el historial de archivos abiertos en el menú de documentos recientes.
-    * Limpia el menú y agrega elementos del historial como opciones de menú,
-    * cada uno asociado con un manejador de eventos que carga el contenido del archivo seleccionado.
-    */
-    private void mostrarHistorialArchivos() {
+     * Muestra el historial de archivos abiertos en el menú de documentos
+     * recientes. Limpia el menú y agrega elementos del historial como opciones
+     * de menú, cada uno asociado con un manejador de eventos que carga el
+     * contenido del archivo seleccionado.
+     */
+    public void mostrarHistorialArchivos() {
 
         // Limpia el menú de documentos recientes
         menuRecientes.getItems().clear();
 
         // Agrega los elementos del historial al menú de documentos recientes
-        for (File archivo : obtenerHistorialArchivos()) {
+        for (File archivo : modelo.obtenerHistorialArchivos()) {
             MenuItem menuItem = new MenuItem(archivo.getName());
 
             // Asigna el EventHandler al hacer clic en el elemento del historial
@@ -307,29 +260,25 @@ public class FXMLVistaController implements Initializable {
     }
 
     /**
-    * Carga el contenido de un archivo en el área de texto. Actualiza el historial al cargar el archivo.
-    *
-    * @param archivo El archivo cuyo contenido se cargará en el área de texto.
-    */
-    private void cargarContenidoArchivo(File archivo) {
-        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
-            String linea;
-            StringBuilder contenido = new StringBuilder();
+     * Carga el contenido de un archivo en el área de texto. Actualiza el
+     * historial al cargar el archivo.
+     *
+     * @param archivo El archivo cuyo contenido se cargará en el área de texto.
+     */
+    public void cargarContenidoArchivo(File archivo) {
 
-            while ((linea = br.readLine()) != null) {
-                contenido.append(linea).append("\n");
-            }
-
-            areaTexto.setText(contenido.toString());
-            agregarAlHistorial(archivo); // Actualiza el historial al cargar un archivo
+        try {
+            String contenido = modelo.leerArchivo(archivo);
+            areaTexto.setText(contenido);
+            modelo.agregarAlHistorial(archivo);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Guarda el contenido actual en el archivo seleccionado o muestra un cuadro de diálogo
-     * para elegir la ubicación y el nombre del archivo.
+     * Guarda el contenido actual en el archivo seleccionado o muestra un cuadro
+     * de diálogo para elegir la ubicación y el nombre del archivo.
      *
      * @param event El evento de acción que desencadena esta operación.
      */
@@ -338,39 +287,41 @@ public class FXMLVistaController implements Initializable {
 
         // Si hay un archivo abierto, guardar en ese archivo directamente
         if (archivoSeleccionado != null) {
-            guardarEnArchivo(archivoSeleccionado);
+            try {
+                modelo.guardarEnArchivoModelo(archivoSeleccionado, areaTexto.getText());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
-            // Si no hay archivo abierto, muestra el cuadro de diálogo para seleccionar la ubicación
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Guardar Archivo de Texto");
-
-            // Establece el filtro para mostrar solo archivos de texto
             ExtensionFilter extFilter = new ExtensionFilter("Archivos de Texto (*.txt)", "*.txt");
             fileChooser.getExtensionFilters().add(extFilter);
-
-            // Muestra el diálogo y espera a que el usuario seleccione la ubicación y el nombre del archivo
             File archivoGuardado = fileChooser.showSaveDialog(new Stage());
 
             if (archivoGuardado != null) {
-                // Guarda el contenido del TextArea en el archivo seleccionado
-                guardarEnArchivo(archivoGuardado);
+                try {
+                    modelo.guardarEnArchivoModelo(archivoGuardado, areaTexto.getText());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     /**
-    * Guarda el contenido del área de texto en el archivo especificado.
-    * Actualiza las referencias a los archivos abierto y guardado.
-    *
-    * @param archivo El archivo en el que se guardará el contenido del área de texto.
-    */
+     * Guarda el contenido del área de texto en el archivo especificado.
+     * Actualiza las referencias a los archivos abierto y guardado.
+     *
+     * @param archivo El archivo en el que se guardará el contenido del área de
+     * texto.
+     */
     private void guardarEnArchivo(File archivo) {
-        
+
         // Guarda el contenido del TextArea en el archivo seleccionado
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo))) {
-            writer.write(areaTexto.getText());
-            archivoSeleccionado = archivo; // Actualiza el archivo abierto
-            archivoGuardado = archivo; // Actualiza el archivo guardado
+        try {
+            modelo.guardarEnArchivoModelo(archivo, areaTexto.getText());
+            modelo.actualizarArchivos(archivo);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -378,40 +329,37 @@ public class FXMLVistaController implements Initializable {
     }
 
     /**
-    * Muestra un cuadro de diálogo para seleccionar la ubicación y el nombre del archivo,
-    * y guarda el contenido del área de texto en el archivo seleccionado.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Muestra un cuadro de diálogo para seleccionar la ubicación y el nombre
+     * del archivo, y guarda el contenido del área de texto en el archivo
+     * seleccionado.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void guardarComo(ActionEvent event) {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Guardar Archivo de Texto");
-
-        // Establece el filtro para mostrar solo archivos de texto
         ExtensionFilter extFilter = new ExtensionFilter("Archivos de Texto (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
-
-        // Muestra el diálogo y espera a que el usuario seleccione la ubicación y el nombre del archivo
         File archivoGuardar = fileChooser.showSaveDialog(new Stage());
 
         if (archivoGuardar != null) {
-            // Guarda el contenido del TextArea en el archivo seleccionado
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoGuardar))) {
-                writer.write(areaTexto.getText());
+            try {
+                modelo.guardarEnArchivoModelo(archivoGuardar, areaTexto.getText());
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
 
     }
 
     /**
-    * Cierra la aplicación JavaFX 
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Cierra la aplicación JavaFX
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void salir(ActionEvent event) {
 
@@ -421,23 +369,20 @@ public class FXMLVistaController implements Initializable {
 
     ///////////////FIN FUNCIONES MENU ARCHIVO//////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
-    
-    
     /////////////////////////////////////////////////////////////////////
     ///////////////////////FUNCIONES PARA EL MENU EDICIóN
-    
     /**
-    * Busca coincidencias del texto ingresado en el área de texto y resalta la primera ocurrencia.
-    * Muestra un cuadro de diálogo para ingresar el texto a buscar.
-    * Actualiza la lista de índices de coincidencias.
-    * Si se encuentran coincidencias, selecciona la primera coincidencia y la resalta.
-    * Si no se encuentran coincidencias, muestra una alerta indicando que el texto no fue encontrado.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Busca coincidencias del texto ingresado en el área de texto y resalta la
+     * primera ocurrencia. Muestra un cuadro de diálogo para ingresar el texto a
+     * buscar. Actualiza la lista de índices de coincidencias. Si se encuentran
+     * coincidencias, selecciona la primera coincidencia y la resalta. Si no se
+     * encuentran coincidencias, muestra una alerta indicando que el texto no
+     * fue encontrado.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void buscarCoincidencias(ActionEvent event) {
-
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Buscar Coincidencias");
         dialog.setHeaderText("Ingrese el texto a buscar:");
@@ -445,14 +390,8 @@ public class FXMLVistaController implements Initializable {
         Optional<String> resultado = dialog.showAndWait();
         resultado.ifPresent(texto -> {
             textoABuscar = texto;
-            indiceCoincidencias.clear();
             String contenido = areaTexto.getText();
-            int index = contenido.indexOf(textoABuscar);
-
-            while (index != -1) {
-                indiceCoincidencias.add(index);
-                index = contenido.indexOf(textoABuscar, index + 1);
-            }
+            indiceCoincidencias = modelo.buscarCoincidencias(contenido, textoABuscar);
 
             if (!indiceCoincidencias.isEmpty()) {
                 indiceActual = 0;
@@ -461,44 +400,36 @@ public class FXMLVistaController implements Initializable {
                 mostrarAlerta("Texto no encontrado", "El texto especificado no se encontró en el documento.");
             }
         });
-
     }
 
     /**
-    * Busca y selecciona la siguiente coincidencia en el área de texto.
-    * Actualiza el índice de coincidencia actual.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Busca y selecciona la siguiente coincidencia en el área de texto.
+     * Actualiza el índice de coincidencia actual.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void buscarSiguiente(ActionEvent event) {
-
-        if (!indiceCoincidencias.isEmpty() && indiceActual < indiceCoincidencias.size() - 1) {
-            indiceActual++;
-            seleccionarCoincidenciaActual();
-        }
-
+        indiceActual = modelo.buscarSiguiente(indiceCoincidencias, indiceActual);
+        seleccionarCoincidenciaActual();
     }
 
     /**
-    * Busca y selecciona la coincidencia anterior en el área de texto.
-    * Actualiza el índice de coincidencia actual.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Busca y selecciona la coincidencia anterior en el área de texto.
+     * Actualiza el índice de coincidencia actual.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void buscarAnterior(ActionEvent event) {
-
-        if (!indiceCoincidencias.isEmpty() && indiceActual > 0) {
-            indiceActual--;
-            seleccionarCoincidenciaActual();
-        }
+        indiceActual = modelo.buscarAnterior(indiceCoincidencias, indiceActual);
+        seleccionarCoincidenciaActual();
     }
 
     /**
-    * Selecciona la coincidencia actual en el área de texto.
-    * Utiliza los índices almacenados en la lista de coincidencias.
-    */
+     * Selecciona la coincidencia actual en el área de texto. Utiliza los
+     * índices almacenados en la lista de coincidencias.
+     */
     private void seleccionarCoincidenciaActual() {
         if (!indiceCoincidencias.isEmpty() && indiceActual < indiceCoincidencias.size()) {
             areaTexto.selectRange(indiceCoincidencias.get(indiceActual), indiceCoincidencias.get(indiceActual) + textoABuscar.length());
@@ -506,12 +437,13 @@ public class FXMLVistaController implements Initializable {
     }
 
     /**
-    * Reemplaza las ocurrencias del texto ingresado por el usuario con el texto nuevo.
-    * Muestra cuadros de diálogo para ingresar el texto a buscar y el texto de reemplazo.
-    * Realiza el reemplazo en el contenido del área de texto.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Reemplaza las ocurrencias del texto ingresado por el usuario con el texto
+     * nuevo. Muestra cuadros de diálogo para ingresar el texto a buscar y el
+     * texto de reemplazo. Realiza el reemplazo en el contenido del área de
+     * texto.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void reemplazar(ActionEvent event) {
         TextInputDialog dialogBuscar = new TextInputDialog();
@@ -527,19 +459,20 @@ public class FXMLVistaController implements Initializable {
 
             resultadoReemplazar.ifPresent(textoReemplazo -> {
                 String contenido = areaTexto.getText();
-                String nuevoContenido = contenido.replace(textoABuscar, textoReemplazo);
+                String nuevoContenido = modelo.reemplazar(contenido, textoABuscar, textoReemplazo);
                 areaTexto.setText(nuevoContenido);
             });
         });
     }
 
     /**
-    * Muestra una alerta con el título y contenido proporcionados.
-    * Utilizado para alertar al usuario cuando no se encuentran coincidencias durante la búsqueda.
-    *
-    * @param titulo    El título de la alerta.
-    * @param contenido El contenido de la alerta.
-    */
+     * Muestra una alerta con el título y contenido proporcionados. Utilizado
+     * para alertar al usuario cuando no se encuentran coincidencias durante la
+     * búsqueda.
+     *
+     * @param titulo El título de la alerta.
+     * @param contenido El contenido de la alerta.
+     */
     private void mostrarAlerta(String titulo, String contenido) {
 
         //ESTE METODO ES DE BUSCAR, SI NO HAY COINCIDENCIA SALTA ALERTA
@@ -552,16 +485,14 @@ public class FXMLVistaController implements Initializable {
 
     ///////////////FIN FUNCIONES MENU EDICIóN//////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
-    
     /////////////////////////////////////////////////////////////////////
     ///////////////////////FUNCIONES PARA EL MENU FORMATO
-    
     /**
-    * Aplica el estilo de negrita al texto seleccionado en el área de texto.
-    * Obtiene el estilo actual y le agrega el estilo de negrita.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Aplica el estilo de negrita al texto seleccionado en el área de texto.
+     * Obtiene el estilo actual y le agrega el estilo de negrita.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void estiloNegrita(ActionEvent event) {
 
@@ -571,11 +502,11 @@ public class FXMLVistaController implements Initializable {
     }
 
     /**
-    * Aplica el estilo de cursiva al texto seleccionado en el área de texto.
-    * Obtiene el estilo actual y le agrega el estilo de cursiva.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Aplica el estilo de cursiva al texto seleccionado en el área de texto.
+     * Obtiene el estilo actual y le agrega el estilo de cursiva.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void estiloCursiva(ActionEvent event) {
 
@@ -585,11 +516,11 @@ public class FXMLVistaController implements Initializable {
     }
 
     /**
-    * Convierte a mayúsculas el texto seleccionado en el área de texto.
-    * Si no hay texto seleccionado, no realiza ninguna acción.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Convierte a mayúsculas el texto seleccionado en el área de texto. Si no
+     * hay texto seleccionado, no realiza ninguna acción.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void textoMayusculas(ActionEvent event) {
 
@@ -604,11 +535,11 @@ public class FXMLVistaController implements Initializable {
     }
 
     /**
-    * Convierte a minúsculas el texto seleccionado en el área de texto.
-    * Si no hay texto seleccionado, no realiza ninguna acción.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Convierte a minúsculas el texto seleccionado en el área de texto. Si no
+     * hay texto seleccionado, no realiza ninguna acción.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void textoMinusculas(ActionEvent event) {
 
@@ -622,48 +553,49 @@ public class FXMLVistaController implements Initializable {
     }
 
     /**
-    * Cambia la fuente del texto en el área de texto a Arial.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Cambia la fuente del texto en el área de texto a Arial.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void cambiarFuenteArial(ActionEvent event) {
-       
+
         cambiarFuente(event);
 
     }
 
     /**
-    * Cambia la fuente del texto en el área de texto a Courier.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Cambia la fuente del texto en el área de texto a Courier.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void cambiarFuenteCourier(ActionEvent event) {
-       
+
         cambiarFuente(event);
 
     }
 
     /**
-    * Cambia la fuente del texto en el área de texto a Verdana.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Cambia la fuente del texto en el área de texto a Verdana.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void cambiarFuenteVerdana(ActionEvent event) {
-       
+
         cambiarFuente(event);
 
     }
 
     /**
-    * Cambia la fuente del texto en el área de texto según la fuente seleccionada en el ComboBox.
-    * Agrega un listener al ComboBox para manejar el cambio de selección y aplicar la nueva fuente.
-    */
+     * Cambia la fuente del texto en el área de texto según la fuente
+     * seleccionada en el ComboBox. Agrega un listener al ComboBox para manejar
+     * el cambio de selección y aplicar la nueva fuente.
+     */
     @FXML
     private void cambiarFuenteCombo() {
-        
+
         // Agrega un listener al ComboBox para manejar el cambio de selección
         comboBoxFuente.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -673,60 +605,61 @@ public class FXMLVistaController implements Initializable {
     }
 
     /**
-    * Cambia la fuente del texto en el área de texto según el MenuItem que desencadena el evento.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Cambia la fuente del texto en el área de texto según el MenuItem que
+     * desencadena el evento.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     private void cambiarFuente(ActionEvent event) {
-        
+
         MenuItem menuItem = (MenuItem) event.getSource(); // Obteniene el MenuItem que desencadena el evento
         String fuente = menuItem.getText(); // Obtiene el texto del MenuItem, que debería ser el nombre de la fuente
         areaTexto.setStyle("-fx-font-family: " + fuente + ";");
     }
 
     /**
-    * Cambia el tamaño del texto en el área de texto a 12 puntos.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Cambia el tamaño del texto en el área de texto a 12 puntos.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void cambiarTamanio12(ActionEvent event) {
         cambiarTamanioTexto(12);
     }
 
     /**
-    * Cambia el tamaño del texto en el área de texto a 14 puntos.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Cambia el tamaño del texto en el área de texto a 14 puntos.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void cambiarTamanio14(ActionEvent event) {
         cambiarTamanioTexto(14);
     }
 
     /**
-    * Cambia el tamaño del texto en el área de texto a 16 puntos.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Cambia el tamaño del texto en el área de texto a 16 puntos.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void cambiarTamanio16(ActionEvent event) {
         cambiarTamanioTexto(16);
     }
 
     /**
-    * Cambia el tamaño del texto en el área de texto a 18 puntos.
-    *
-    * @param event El evento de acción que desencadena esta operación.
-    */
+     * Cambia el tamaño del texto en el área de texto a 18 puntos.
+     *
+     * @param event El evento de acción que desencadena esta operación.
+     */
     @FXML
     private void cambiarTamanio18(ActionEvent event) {
         cambiarTamanioTexto(18);
     }
 
-    
     /**
-     * Cambia el tamaño del texto en el área de texto según el tamaño proporcionado.
+     * Cambia el tamaño del texto en el área de texto según el tamaño
+     * proporcionado.
      *
      * @param tamanio El tamaño del texto en puntos.
      */
@@ -735,13 +668,14 @@ public class FXMLVistaController implements Initializable {
     }
 
     /**
-    * Agrega un listener al ComboBox de tamaños de fuente para manejar el cambio de selección.
-    * Cuando se selecciona un tamaño de fuente en el ComboBox, actualiza el tamaño del texto
-    * en el área de texto según el nuevo valor seleccionado.
-    */
+     * Agrega un listener al ComboBox de tamaños de fuente para manejar el
+     * cambio de selección. Cuando se selecciona un tamaño de fuente en el
+     * ComboBox, actualiza el tamaño del texto en el área de texto según el
+     * nuevo valor seleccionado.
+     */
     @FXML
     private void cambiarTamanoCombo() {
-        
+
         // Agrega un listener al ComboBox para manejar el cambio de selección
         comboBoxTamano.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -749,20 +683,18 @@ public class FXMLVistaController implements Initializable {
             }
         });
     }
-    
+
     ///////////////FIN FUNCIONES MENU FORMATO//////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
-
     /////////////////////////////////////////////////////////////////////
     ///////////////////////FUNCIONES PARA EL MENU VER
-    
     /**
-    * Maneja el evento de acción para mostrar u ocultar la barra de botones.
-    * Si la barra de botones está visible, la oculta; de lo contrario, la hace visible.
-    * Este método está vinculado a la acción del menú correspondiente.
-    *
-    * @param event El evento de acción que desencadena este método.
-    */
+     * Maneja el evento de acción para mostrar u ocultar la barra de botones. Si
+     * la barra de botones está visible, la oculta; de lo contrario, la hace
+     * visible. Este método está vinculado a la acción del menú correspondiente.
+     *
+     * @param event El evento de acción que desencadena este método.
+     */
     @FXML
     private void verUocultarBotones(ActionEvent event) {
 
@@ -771,19 +703,19 @@ public class FXMLVistaController implements Initializable {
             menuBotones.setVisible(false);
 
         } else {
-            
+
             menuBotones.setVisible(true);
 
         }
     }
 
     /**
-    * Maneja el evento de acción para mostrar u ocultar la barra de estado.
-    * Si la barra de estado está visible, la oculta; de lo contrario, la hace visible.
-    * Este método está vinculado a la acción del menú correspondiente.
-    *
-    * @param event El evento de acción que desencadena este método.
-    */
+     * Maneja el evento de acción para mostrar u ocultar la barra de estado. Si
+     * la barra de estado está visible, la oculta; de lo contrario, la hace
+     * visible. Este método está vinculado a la acción del menú correspondiente.
+     *
+     * @param event El evento de acción que desencadena este método.
+     */
     @FXML
     private void verUocultarBarraEstado(ActionEvent event) {
 
@@ -792,7 +724,7 @@ public class FXMLVistaController implements Initializable {
             contenedorBot.setVisible(false);
 
         } else {
-           
+
             contenedorBot.setVisible(true);
 
         }
@@ -801,18 +733,15 @@ public class FXMLVistaController implements Initializable {
 
     ///////////////FIN FUNCIONES MENU VER//////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
-    
-    
     /////////////////////////////////////////////////////////////////////
     ///////////////////////FUNCIONES PARA EL MENU AYUDA
-    
     /**
-    * Maneja el evento de acción para abrir la ventana "Acerca de".
-    * Carga y muestra una nueva ventana que contiene información sobre la aplicación.
-    * Este método está vinculado a la acción del menú correspondiente.
-    *
-    * @param event El evento de acción que desencadena este método.
-    */
+     * Maneja el evento de acción para abrir la ventana "Acerca de". Carga y
+     * muestra una nueva ventana que contiene información sobre la aplicación.
+     * Este método está vinculado a la acción del menú correspondiente.
+     *
+     * @param event El evento de acción que desencadena este método.
+     */
     @FXML
     private void abrirAcercaDe(ActionEvent event) {
 
@@ -823,11 +752,11 @@ public class FXMLVistaController implements Initializable {
             Scene scene = new Scene(root);
             acercaDeStage.setTitle("Acerca de");
             acercaDeStage.setScene(scene);
-            
+
             // Configura la ventana como modal
             acercaDeStage.initModality(Modality.APPLICATION_MODAL);
 
-            acercaDeStage.show();  
+            acercaDeStage.show();
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -837,17 +766,15 @@ public class FXMLVistaController implements Initializable {
 
     ///////////////FIN FUNCIONES MENU AYUDA//////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
-    
-    
     /////////////////////////////////////////////////////////////////////////////////////////
     ////////////////FUNCIONES BARRA ESTADO/////////////////////////////////////////////////
-    
     /**
-     * Actualiza la barra de estado con información relevante, como la posición del cursor,
-     * el recuento de palabras y líneas, y la codificación del archivo.
+     * Actualiza la barra de estado con información relevante, como la posición
+     * del cursor, el recuento de palabras y líneas, y la codificación del
+     * archivo.
      */
     private void actualizarBarraDeEstado() {
-        
+
         // obtener la posición del cursor desde el area de texto
         int posicionCursor = areaTexto.getCaretPosition();
         labelCursor.setText("Posición del Cursor: " + posicionCursor);
@@ -898,47 +825,19 @@ public class FXMLVistaController implements Initializable {
     }
 
     /**
-     * Obtiene la codificación del archivo actual o "UTF-8" si no hay archivo abierto.
+     * Obtiene la codificación del archivo actual o "UTF-8" si no hay archivo
+     * abierto.
      *
      * @return La codificación del archivo actual.
      */
     private String obtenerCodificacion() {
         if (archivoSeleccionado != null) {
-            return obtenerCodificacionArchivo(archivoSeleccionado);
+            return modelo.obtenerCodificacionArchivo(archivoSeleccionado);
         } else {
             return "UTF-8";
         }
     }
 
-    /**
-    * Obtiene la codificación de caracteres de un archivo.
-    * Lee los primeros bytes del archivo para analizar y determinar la codificación.
-    *
-    * @param archivo El archivo del cual se va a determinar la codificación.
-    * @return La codificación de caracteres del archivo o un mensaje de error si no se puede determinar.
-    */
-    private String obtenerCodificacionArchivo(File archivo) {
-        
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(archivo), Charset.defaultCharset()))) {
-            br.mark(4096); // Marco el inicio del flujo para volver a él si es necesario
-
-            //analizar la codificación
-            char[] buffer = new char[4096];
-            int bytesRead = br.read(buffer);
-
-            
-            String codificacion = Charset.defaultCharset().name();
-            br.reset(); // Volver al inicio del flujo
-
-            
-            return codificacion;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "No se pudo determinar la codificación";
-        }
-    }
-
     ///////////////////////////FIN FUNCIONES BARRA ESTADO//////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
-    
 }

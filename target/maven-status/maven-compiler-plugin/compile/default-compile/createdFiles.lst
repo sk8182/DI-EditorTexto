@@ -1,4 +1,5 @@
 editortexto\FXMLVistaControllerAcerca.class
 module-info.class
 editortexto\FXMLVistaController.class
+modelo\EditorModelo.class
 editortexto\EditorTexto.class
